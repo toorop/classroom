@@ -23,11 +23,12 @@ function createWindow() {
         width: 800,
         height: 600,
         title: 'ClassRoom',
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js'),
             // enableRemoteModule: true,
-            // contextIsolation: false
+            contextIsolation: true
         },
         icon: path.join(__dirname, 'public/favicon.png'),
         show: false
@@ -73,7 +74,6 @@ app.on('ready', () => {
         // full screen
         mainWindow.maximize()
     }
-    mainWindow.webContents.openDevTools()
 })
 
 // Quit when all windows are closed.

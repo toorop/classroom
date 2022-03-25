@@ -16,35 +16,42 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "@rollup/plugin-typescript": "^8.0.0",
+    "@rollup/plugin-typescript": "^8.3.1",
     "@tsconfig/svelte": "^3.0.0",
+    "autoprefixer": "^10.4.4",
     "concurrently": "^7.0.0",
     "electron": "^17.2.0",
     "electron-builder": "^22.14.13",
     "electron-devtools-installer": "^3.2.0",
+    "node-sass": "^7.0.1",
+    "postcss": "^8.4.12",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-svelte-svg": "^1.0.0-beta.6",
     "rollup-plugin-terser": "^7.0.0",
+    "sass": "^1.49.9",
     "sirv-cli": "^2.0.0",
     "svelte": "^3.0.0",
     "svelte-check": "^2.0.0",
-    "svelte-preprocess": "^4.0.0",
+    "svelte-preprocess": "^4.10.4",
     "tslib": "^2.0.0",
-    "typescript": "^4.0.0",
+    "typescript": "^4.6.3",
     "wait-on": "^6.0.1"
   },
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
-    "electron-serve": "^1.1.0"
+    "electron-serve": "^1.1.0",
+    "svelte-spa-router": "^3.2.0"
   },
   "build": {
     "icon": "public/favicon.png",
-    "productName": "Svelte and Electron App",
+    "productName": "ClassRoom",
     "files": [
       "public/**/*",
-      "main.js"
+      "main.js",
+      "preload.js"
     ],
     "win": {},
     "linux": {},

@@ -1,26 +1,8 @@
 <script lang="ts">
-  export let name: string
+  import Navbar from './Components/Navbar.svelte'
 </script>
 
-<main>
-  <h1>Hellooo {name}!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p>
-</main>
+<Navbar />
 
 <style>
-  @import '../public/css/nord.css';
-  main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-  }
-
-  h1 {
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
 </style>
