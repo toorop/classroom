@@ -1,4 +1,4 @@
 import { writable } from 'svelte/store'
-import type { Vault } from '../../lib/Vault'
+import type { Vault } from '../../Classes/Vault'
 
 export const vaultStore = writable<Vault>({})

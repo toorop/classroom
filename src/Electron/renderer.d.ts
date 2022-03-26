@@ -1,5 +1,7 @@
+import type { IVault } from '../Classes/Vault'
+
 export interface API {
-  getVault: () => Promise<void>
+  getVault: () => Promise<IVault>
 }
 
 declare global {

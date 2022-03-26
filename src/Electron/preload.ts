@@ -2,5 +2,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
 
 contextBridge.exposeInMainWorld('API', {
-    getVault: () => { ipcRenderer.invoke('getVault'); },
+  getVault: () => ipcRenderer.invoke('getVault')
 })

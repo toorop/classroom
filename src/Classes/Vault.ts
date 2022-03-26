@@ -1,4 +1,4 @@
-import fs from 'fs'
+import * as fs from 'fs'
 
 // represents a file in the vault
 export interface IFile {
@@ -31,10 +31,10 @@ export class Vault implements IVault {
 
   // constructor
   constructor(path: string) {
-    this.path = path
     // path exists ?
     if (!fs.existsSync(path)) {
       throw new Error('Vault path does not exist')
     }
+    this.path = path
   }
 }

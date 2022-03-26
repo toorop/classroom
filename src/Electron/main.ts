@@ -2,9 +2,10 @@
 import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import * as path from 'path'
 import * as serve from 'electron-serve'
-//import { Vault } from './lib/Vault'
+import { Vault } from '../Classes/Vault'
 
 const loadURL = serve({ directory: 'public' })
+
 // debug
 const vaultPath = '/home/toorop/Téléchargements/classroom'
 
@@ -13,20 +14,29 @@ const vaultPath = '/home/toorop/Téléchargements/classroom'
 let mainWindow: BrowserWindow
 
 // return the vault object
-// async function getVault() {
-//   // path exists ?
-//   const vault = new Vault(vaultPath)
-//   console.log(vault)
-// }
+async function getVault() {
+  const vault = new Vault(vaultPath)
+  console.log('VAULT', vault)
+  return vault
+}
 
 function isDev() {
   return !app.isPackaged
 }
 
-// live reload
-// if (isDev()) {
-//     require('electron-reload')
-// }
+if (isDev()) {
+  // enable hot reloading
+  require('electron-reload')(__dirname, {
+    electron: path.join(
+      __dirname,
+      '..',
+      '..',
+      'node_modules',
+      '.bin',
+      'electron'
+    )
+  })
+}
 
 function createWindow() {
   // Create the browser window.
@@ -80,6 +90,8 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   createWindow()
+  ipcMain.handle('getVault', getVault)
+
   if (isDev()) {
     mainWindow.webContents.openDevTools()
     // full screen
