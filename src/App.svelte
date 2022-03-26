@@ -1,8 +1,40 @@
+<!-- main layout -->
 <script lang="ts">
   import Navbar from './Components/Navbar.svelte'
 </script>
 
 <Navbar />
 
-<style>
+<!-- Global CSS -->
+<style lang="scss" global>
+  @import './styles/colors.scss';
+
+  // body
+  body {
+    color: $color0;
+    background-color: $color4;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    &.dark {
+      color: $color4;
+      background-color: $color0;
+    }
+  }
+
+  a {
+    color: $color8;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a:visited {
+    color: $color8;
+  }
+
+  // dark mode
+  // .dark {
+  // }
 </style>

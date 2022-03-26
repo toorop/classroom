@@ -21,20 +21,21 @@
   </span>
 </nav>
 
-<style>
+<style lang="scss">
+  @import '../styles/colors.scss';
+
   nav {
     display: flex;
     flex-direction: row-reverse;
     margin: 0;
     padding: 1rem;
-    z-index: 1;
   }
 
   #theme-switcher {
     cursor: pointer;
   }
 
-  :global(body.dark #theme-switcher) {
-    color: var(nord-4);
+  .dark #theme-switcher {
+    color: $color4;
   }
 </style>
