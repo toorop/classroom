@@ -2,16 +2,17 @@
   "name": "classroom",
   "version": "1.0.0",
   "private": true,
-  "main": "main.js",
+  "main": "dist/main.js",
   "scripts": {
+    "tsc": "tsc --project tsconfig-electron.json",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "electron": "wait-on http://localhost:8080 && electron .",
-    "electron-dev": "concurrently \"npm run dev\" \"npm run electron\"",
-    "preelectron-pack": "npm run build",
-    "electron-pack": "electron-builder"
+    "electron": "wait-on http://localhost:8080 && electron dist/main.js",
+    "electron-dev": "npm run tsc && concurrently \"npm run dev\" \"npm run electron\"",
+    "preelectron-pack": "npm run tsc && npm run build",
+    "electron-pack": "electron-builder -l"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -50,11 +51,15 @@
     "productName": "ClassRoom",
     "files": [
       "public/**/*",
-      "main.js",
-      "preload.js"
+      "dist/main.js",
+      "dist/preload.js"
     ],
     "win": {},
     "linux": {},
-    "mac": {}
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    }
   }
 }

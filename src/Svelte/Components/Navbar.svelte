@@ -1,6 +1,6 @@
 <script>
-  import Sun from '../../public/img/icons/sun.svg'
-  import Moon from '../../public/img/icons/moon.svg'
+  import Sun from '../../../public/img/icons/sun.svg'
+  import Moon from '../../../public/img/icons/moon.svg'
 
   let darkMode = true
 
@@ -24,6 +24,12 @@
 <style lang="scss">
   @import '../styles/colors.scss';
 
+  :global(.dark) {
+    #theme-switcher {
+      color: $color4;
+    }
+  }
+
   nav {
     display: flex;
     flex-direction: row-reverse;
@@ -33,9 +39,5 @@
 
   #theme-switcher {
     cursor: pointer;
-  }
-
-  .dark #theme-switcher {
-    color: $color4;
   }
 </style>

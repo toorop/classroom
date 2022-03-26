@@ -1,6 +1,14 @@
 <!-- main layout -->
 <script lang="ts">
+  import { onMount } from 'svelte'
   import Navbar from './Components/Navbar.svelte'
+
+  onMount(async () => {
+    // populate vault
+    console.log('populate vault')
+    const vault = await window.API.getVault()
+    console.log('vault', vault)
+  })
 </script>
 
 <Navbar />

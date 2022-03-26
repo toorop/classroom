@@ -32,7 +32,7 @@ function serve() {
 }
 
 export default {
-	input: 'src/main.js',
+	input: 'src/Svelte/main.ts',
 	output: {
 		sourcemap: true,
 		format: 'iife',
@@ -53,7 +53,7 @@ export default {
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production
-			}
+			},
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
