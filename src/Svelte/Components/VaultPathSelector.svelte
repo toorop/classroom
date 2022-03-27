@@ -28,9 +28,26 @@
   #vaultpathselector button {
     cursor: pointer;
     width: 50%;
-    font-size: 1.1rem;
-    border: 0.5px solid $color3;
+    font-size: 0.9rem;
+    border: 1px solid $color3;
     padding: 1rem;
-    background-color: $color7;
+    background-color: $color4;
+    text-transform: uppercase;
+  }
+
+  #vaultpathselector button:hover {
+    background-color: $color0;
+    color: $color4;
+  }
+
+  :global(.dark) #vaultpathselector {
+    button {
+      background-color: $color0;
+      color: $color4;
+    }
+    button:hover {
+      background-color: $color4;
+      color: $color0;
+    }
   }
 </style>
