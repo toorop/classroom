@@ -7,6 +7,7 @@ export interface API {
 
   // fs methods
   fsStat: (path: string) => Promise<object>
+  fsRead: (path: string) => Promise<Buffer>
   fsWalk: (dir: string) => Promise<string>
   fsMime: (path: string) => Promise<string>
 

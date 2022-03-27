@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import { readFileSync } from 'original-fs'
 import * as path from 'path'
 const fsp = require('fs').promises
 var mime = require('mime-types')
@@ -19,6 +20,11 @@ export const fsStat = (path: string) => {
 // get a list of files in a directory (recursivelly)
 export const fsWalk = async (dir: string): Promise<string> => {
   return await walk(dir)
+}
+
+// get file content
+export const fsRead = (path: string) => {
+  return readFileSync(path)
 }
 
 // get file type

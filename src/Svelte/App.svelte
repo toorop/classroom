@@ -46,8 +46,6 @@
 
   // main layout
   #app {
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
   }
 
@@ -59,8 +57,6 @@
   }
 
   main {
-    display: flex;
-    flex: 1;
     margin-left: 2rem;
     margin-right: 2rem;
   }

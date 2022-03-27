@@ -21,10 +21,8 @@
   @import '../styles/colors.scss';
 
   #vaultpathselector {
-    margin-top: -6rem;
+    margin-top: 6rem;
     display: flex;
-    flex: 1;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
   }

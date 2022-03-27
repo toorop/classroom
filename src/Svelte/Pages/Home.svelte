@@ -1,6 +1,7 @@
 <!-- main layout -->
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { push } from 'svelte-spa-router'
   import { Vault } from '../Classes/Vault'
   import VaultPathSelector from '../Components/VaultPathSelector.svelte'
 
@@ -29,6 +30,7 @@
   const initVault = async (vaultPath: string) => {
     const vault = new Vault(vaultPath)
     const content = await vault.load()
+    push('/room')
 
     // check vault path
     // must be empty or have a good structure
