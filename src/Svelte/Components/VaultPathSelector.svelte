@@ -1,10 +1,14 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
+
+  // create event dispatcher
+  const dispatch = createEventDispatcher()
+
+  // handle click button event
   const handleClick = async () => {
     const path = await window.API.showOpenDialog(['openDirectory'])
     if (path) {
-      window.localStorage.setItem('vaultPath', path)
-      // TODO route push
-      window.location.reload()
+      dispatch('vault-path-selected', path)
     }
   }
 </script>

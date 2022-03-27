@@ -3,7 +3,7 @@ import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import * as path from 'path'
 import * as serve from 'electron-serve'
 import { getVault } from './ipc/vault'
-import { fsStat } from './ipc/fs'
+import { fsGetMime, fsStat, fsWalk } from './ipc/fs'
 import { showOpenDialog } from './ipc/ui'
 
 const loadURL = serve({ directory: 'public' })
@@ -108,7 +108,12 @@ const defineIpc = () => {
   )
 
   // fs methods
+  // fs.stat
   ipcMain.handle('fs-stat', (_evt, path: string) => fsStat(path))
+  // fs walk
+  ipcMain.handle('fs-walk', (_evt, dir: string) => fsWalk(dir))
+  // get mimetype
+  ipcMain.handle('fs-mime', (_evt, path: string) => fsGetMime(path))
 
   // vault methods
   ipcMain.handle('getVault', getVault)

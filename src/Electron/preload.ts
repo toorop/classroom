@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld('API', {
 
   // fs methods
   fsStat: (path: string) => ipcRenderer.invoke('fs-stat', path),
+  fsWalk: (dir: string) => ipcRenderer.invoke('fs-walk', dir),
+  fsMime: (path: string) => ipcRenderer.invoke('fs-mime', path),
 
   // vault methods
   getVault: () => ipcRenderer.invoke('getVault')

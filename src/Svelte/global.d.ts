@@ -7,6 +7,8 @@ export interface API {
 
   // fs methods
   fsStat: (path: string) => Promise<object>
+  fsWalk: (dir: string) => Promise<string>
+  fsMime: (path: string) => Promise<string>
 
   // vault methods
   getVault: () => Promise<IVault>
