@@ -2,17 +2,34 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import Navbar from './Components/Navbar.svelte'
-  import type { IVault } from '../Classes/Vault'
+  import VaultPathSelector from './Components/VaultPathSelector.svelte'
+
+  // debug
+  const vaultPath = '/home/toorop/Téléchargements/classroom'
 
   onMount(async () => {
-    // populate vault
-    console.log('populate vault')
-    const vault: IVault = await window.API.getVault()
-    console.log('vault', vault.path)
+    // is vault path in object store?
+    const vaultPath = window.localStorage.getItem('vaultPath')
+    if (vaultPath) {
+      // populate vault
+      console.log('init vault')
+      const stat = await window.API.fsStat(vaultPath)
+      console.log('fsstats', stat)
+    } else {
+      // ask user to select a vault
+      console.log('ask user to select a vault')
+    }
   })
 </script>
 
-<Navbar />
+<div id="app">
+  <header>
+    <Navbar />
+  </header>
+  <main>
+    <VaultPathSelector />
+  </main>
+</div>
 
 <!-- Global CSS -->
 <style lang="scss" global>
@@ -43,7 +60,24 @@
     color: $color8;
   }
 
-  // dark mode
-  // .dark {
-  // }
+  // main layout
+  #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    display: flex;
+    flex-direction: row-reverse;
+    z-index: 1;
+    position: relative;
+  }
+
+  main {
+    display: flex;
+    flex: 1;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
 </style>

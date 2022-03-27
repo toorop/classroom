@@ -31,8 +31,6 @@
   }
 
   nav {
-    display: flex;
-    flex-direction: row-reverse;
     margin: 0;
     padding: 1rem;
   }

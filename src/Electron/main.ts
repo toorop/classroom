@@ -2,23 +2,15 @@
 import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import * as path from 'path'
 import * as serve from 'electron-serve'
-import { Vault } from '../Classes/Vault'
+import { getVault } from './ipc/vault'
+import { fsStat } from './ipc/fs'
+import { showOpenDialog } from './ipc/ui'
 
 const loadURL = serve({ directory: 'public' })
-
-// debug
-const vaultPath = '/home/toorop/Téléchargements/classroom'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow
-
-// return the vault object
-async function getVault() {
-  const vault = new Vault(vaultPath)
-  console.log('VAULT', vault)
-  return vault
-}
 
 function isDev() {
   return !app.isPackaged
@@ -27,14 +19,7 @@ function isDev() {
 if (isDev()) {
   // enable hot reloading
   require('electron-reload')(__dirname, {
-    electron: path.join(
-      __dirname,
-      '..',
-      '..',
-      'node_modules',
-      '.bin',
-      'electron'
-    )
+    electron: path.join(__dirname, '..', 'node_modules', '.bin', 'electron')
   })
 }
 
@@ -89,9 +74,11 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  // define IPC events & handlers
+  defineIpc()
+  // create main window
   createWindow()
-  ipcMain.handle('getVault', getVault)
-
+  // Show devtools if not packaged
   if (isDev()) {
     mainWindow.webContents.openDevTools()
     // full screen
@@ -111,5 +98,18 @@ app.on('activate', function () {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow()
 })
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+
+// IPC
+const defineIpc = () => {
+  // ui methods
+  // show open file dialog
+  ipcMain.handle('showOpenDialog', (evt, options: string[]) =>
+    showOpenDialog(evt, options)
+  )
+
+  // fs methods
+  ipcMain.handle('fs-stat', (_evt, path: string) => fsStat(path))
+
+  // vault methods
+  ipcMain.handle('getVault', getVault)
+}

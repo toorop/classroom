@@ -2,14 +2,14 @@
   "name": "classroom",
   "version": "1.0.0",
   "private": true,
-  "main": "dist/Electron/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "tsc": "tsc --project tsconfig-electron.json",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "electron": "wait-on http://localhost:8080 && electron dist/Electron/main.js",
+    "electron": "wait-on http://localhost:8080 && electron dist/main.js",
     "electron-dev": "npm run tsc && concurrently \"npm run dev\" \"npm run electron\"",
     "preelectron-pack": "npm run tsc && npm run build",
     "electron-pack": "electron-builder -l"
