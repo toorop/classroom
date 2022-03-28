@@ -57,7 +57,5 @@
   }
 
   main {
-    margin-left: 2rem;
-    margin-right: 2rem;
   }
 </style>

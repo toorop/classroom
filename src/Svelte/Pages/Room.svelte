@@ -1,56 +1,179 @@
-<script lang="ts">
-  import { afterUpdate, beforeUpdate, onMount } from 'svelte'
-
-  // create File object
-  const videoPath =
-    '/media/toorop/Bertha/Formation/Dev/Egghead - Build an nft based ticketing system/01-egghead-create-a-new-nft-project-with-scaffold-eth-vlrVuk-um.mp4'
-
-  let videoSource: string = ''
-
-  onMount(async () => {
-    videoSource = await getVideoURL(videoPath)
-    const video = document.getElementById('player') as HTMLVideoElement
-    video.addEventListener('timeupdate', (evt: ProgressEvent) => {
-      console.log(evt)
-    })
-    video.currentTime = 2
-  })
-
-  const getVideoURL = async (path: string) => {
-    const fileContent = await window.API.fsRead(path)
-    const videoFile = new window.File([fileContent], 'video/mp4')
-    const url = URL.createObjectURL(videoFile)
-    return url
-  }
+<script>
+  import Clock from '../../../public/img/icons/clock.svg'
+  import ChevronDown from '../../../public/img/icons/chevrons-down.svg'
+  import ChevronRight from '../../../public/img/icons/chevrons-right.svg'
+  import VideoPlayer from '../Components/VideoPlayer.svelte'
 </script>
 
-<div class="debug"><pre>{videoSource}</pre></div>
-<div id="videoPlayer">
-  <video id="player" controls src={videoSource}>
-    <track kind="captions" />
-    <!-- <source src={videoSource} type="video/mp4" /> -->
-    Your browser does not support the video tag.
-  </video>
+<h1>Udemy - HTML&CSS Course 2022 Flexbox & Grid</h1>
+<div id="room">
+  <div id="video-player">
+    <VideoPlayer />
+  </div>
+  <div id="chapterslessons">
+    <h2>Lessons</h2>
+    <div class="scrollable">
+      <div class="chapter">
+        <h3>01 - Course intro</h3>
+        <div class="v-spacer" />
+        <ChevronDown width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+      <div class="lesson active">
+        <h4>001 Course Structure</h4>
+        <div class="duration">
+          <Clock width="14" height="14" viewBox="0 0 24 24" />
+          4:15
+        </div>
+      </div>
+      <div class="lesson">
+        <h4>002 Video blur fix</h4>
+        <div class="duration">
+          <Clock width="14" height="14" viewBox="0 0 24 24" />
+          12:51
+        </div>
+      </div>
+      <div class="lesson">
+        <h4>003 Course Review</h4>
+        <div class="duration">
+          <Clock width="14" height="14" viewBox="0 0 24 24" />
+          8:12
+        </div>
+      </div>
+      <div class="chapter">
+        <h3>02 - HTML tutorial</h3>
+        <div class="v-spacer" />
+        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+      <div class="chapter">
+        <h3>03 - HTML Coffee Project</h3>
+        <div class="v-spacer" />
+        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+      <div class="chapter">
+        <h3>04 - HTML tutorial</h3>
+        <div class="v-spacer" />
+        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+      <div class="chapter">
+        <h3>05 - HTML Coffee Project</h3>
+        <div class="v-spacer" />
+        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+      <div class="chapter">
+        <h3>06 - HTML tutorial</h3>
+        <div class="v-spacer" />
+        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+      <div class="chapter">
+        <h3>07 - HTML Coffee Project</h3>
+        <div class="v-spacer" />
+        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+      </div>
+    </div>
+  </div>
 </div>
 
-<style lan="scss">
-  #videoPlayer {
-    display: flex;
+<style lang="scss">
+  @import '../styles/colors.scss';
+
+  h1 {
+    margin: 0;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: $color5;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-left: 1.5rem;
+    text-transform: capitalize;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  h4 {
+    margin-top: 0.7rem;
+    margin-bottom: 0.4rem;
+    text-transform: capitalize;
+  }
+
+  .v-spacer {
     flex-grow: 1;
-    justify-content: center;
+  }
+
+  #room {
+    display: flex;
+  }
+
+  #video-player {
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-basis: 70%;
+    background-color: black;
+    min-width: 60ch;
+  }
+
+  #chapterslessons {
+    flex: 1 1 30%;
+    flex-direction: column;
+    background-color: $color6;
+    min-width: 35ch;
+  }
+
+  :global(.dark) #chapterslessons {
+    background-color: $color1;
+  }
+
+  .scrollable {
+    overflow-y: auto;
+    // max-height: 550px;
+  }
+
+  .scrollable::-webkit-scrollbar {
+    width: 15px;
+  }
+  .scrollable::-webkit-scrollbar-thumb {
+    background-color: $color9;
+    border-radius: 1px;
+  }
+  .scrollable::-webkit-scrollbar-track {
+    background-color: $color1;
+  }
+
+  .chapter {
+    display: flex;
     align-items: center;
-    height: 400px;
+    padding: 0.8rem;
+    border-bottom: 1px solid $color7;
+    background-color: $color2;
+  }
+  .chapter:hover {
+    background: linear-gradient(90deg, $color2, $color1);
+    cursor: pointer;
   }
 
-  video {
-    height: 100%;
+  .lesson {
+    padding: 0.8rem;
+    padding-left: 2rem;
+    padding-top: 0.1rem;
+    border-bottom: 1px solid $color9;
+    background-color: $color3;
   }
-  .debug {
+
+  .lesson .duration {
     display: flex;
-    flex-grow: 1;
-
-    justify-content: center;
+    align-items: center;
+    gap: 0.1rem;
+    margin-left: 0rem;
+    font-size: 0.9rem;
   }
 
-  /* your styles go here */
+  .lesson.active {
+    background: linear-gradient(90deg, $color10, $color8);
+  }
 </style>

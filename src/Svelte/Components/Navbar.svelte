@@ -31,8 +31,12 @@
   }
 
   nav {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-grow: 1;
     margin: 0;
     padding: 1rem;
+    z-index: 1;
   }
 
   #theme-switcher {
