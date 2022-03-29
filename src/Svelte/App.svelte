@@ -44,6 +44,17 @@
     color: $color8;
   }
 
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $color9;
+    border-radius: 1px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: $color1;
+  }
+
   // main layout
   #app {
     min-height: 100vh;
@@ -54,8 +65,5 @@
     flex-direction: row-reverse;
     z-index: 1;
     position: relative;
-  }
-
-  main {
   }
 </style>

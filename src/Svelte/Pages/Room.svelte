@@ -1,64 +1,78 @@
 <script>
   import Clock from '../../../public/img/icons/clock.svg'
-  import ChevronDown from '../../../public/img/icons/chevrons-down.svg'
+  import ChevronsDown from '../../../public/img/icons/chevrons-down.svg'
+  import ChevronDown from '../../../public/img/icons/chevron-down.svg'
   import ChevronRight from '../../../public/img/icons/chevrons-right.svg'
+  import Folder from '../../../public/img/icons/folder.svg'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
 </script>
 
 <h1>Udemy - HTML&CSS Course 2022 Flexbox & Grid</h1>
-<div id="room">
+<div id="video-and-summary">
   <div id="video-player">
     <VideoPlayer />
   </div>
   <div id="chapterslessons">
-    <h2>Lessons</h2>
+    <h2>Course content</h2>
     <div class="chapters-wrapper scrollable">
       <div class="chapters-content">
         <div class="chapter">
           <h3>01 - Course intro</h3>
           <div class="v-spacer" />
-          <ChevronDown width="24" height="24" viewBox="0 0 24 24" />
+          <ChevronsDown />
         </div>
         <div class="lesson active">
           <h4>001 Course Structure</h4>
-          <div class="duration">
-            <Clock width="14" height="14" viewBox="0 0 24 24" />
-            4:15
+          <div class="lesson-detail">
+            <div class="duration">
+              <Clock width="14" height="14" />
+              4:15
+            </div>
           </div>
         </div>
         <div class="lesson">
           <h4>002 Video blur fix</h4>
-          <div class="duration">
-            <Clock width="14" height="14" viewBox="0 0 24 24" />
-            12:51
+          <div class="lesson-detail">
+            <div class="duration">
+              <Clock width="14" height="14" />
+              12:51
+            </div>
+            <div class="v-spacer" />
+            <button>
+              <Folder width="14" height="14" />
+              <span> Ressources</span>
+              <ChevronDown width="14" height="14" viewBox="0 0 24 24" />
+            </button>
           </div>
         </div>
         <div class="lesson">
           <h4>003 Course Review</h4>
-          <div class="duration">
-            <Clock width="14" height="14" viewBox="0 0 24 24" />
-            8:12
+          <div class="lesson-detail">
+            <div class="duration">
+              <Clock width="14" height="14" />
+              8:12
+            </div>
           </div>
         </div>
         <div class="chapter">
           <h3>02 - HTML tutorial</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+          <ChevronRight width="24" height="24" />
         </div>
         <div class="chapter">
           <h3>03 - HTML Coffee Project</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+          <ChevronRight width="24" height="24" />
         </div>
         <div class="chapter">
           <h3>04 - HTML tutorial</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+          <ChevronRight width="24" height="24" />
         </div>
         <div class="chapter">
           <h3>05 - HTML Coffee Project</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+          <ChevronRight width="24" height="24" />
         </div>
         <div class="chapter">
           <h3>06 - HTML tutorial</h3>
@@ -71,15 +85,64 @@
           <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
         </div>
       </div>
+    </div>
   </div>
-  </div>
+</div>
+<div id="html-content">
+  <p><strong>Finished Code</strong></p>
+  <p>
+    Finished code is attached to each applicable lecture throughout the course.
+    If you get stuck at any point you can download the code and compare it
+    against yours with a diff tool like <a
+      href="https://www.diffchecker.com/"
+      rel="noopener noreferrer"
+      target="_blank">Diffchecker</a
+    > or VSCode's built-in comparison tool.
+  </p>
+  <p><strong>Diagrams</strong></p>
+  <p>
+    The diagrams shown in the course are attached to this lecture note as a zip
+    file.
+  </p>
+  <ul>
+    <li><p>Download the file and extract it somewhere on your computer.</p></li>
+    <li>
+      <p>
+        Visit <a
+          href="https://www.diagrams.net/"
+          rel="noopener noreferrer"
+          target="_blank">diagrams.net (formerly draw.io)</a
+        >.
+      </p>
+    </li>
+    <li>
+      <p>
+        Select <strong>Open Existing Diagram </strong>and use the file explorer
+        to select the diagram file from your computer.
+      </p>
+      <p>or</p>
+    </li>
+    <li><p>Click on <strong>File</strong> from the diagrams.net menu.</p></li>
+    <li>
+      <p>
+        Select <strong>Open From Device</strong> and use the file explorer to select
+        the diagram file from your computer.
+      </p>
+    </li>
+  </ul>
+  <p>
+    <em
+      >Note - Please understand, if a diagram or group of diagrams is missing,
+      this means that we no longer have them to share. You'll need to use a good
+      screenshot browser extension to make a copy from the video lecture.</em
+    >
+  </p>
 </div>
 
 <style lang="scss">
   @import '../styles/colors.scss';
 
-  .chapters-wrapper{
-
+  .chapters-wrapper {
     background: red;
     max-height: 300px;
     overflow: auto;
@@ -90,11 +153,9 @@
       position: relative;
       overflow: auto;
     }
-
- 
   }
 
-  .chapters-content{
+  .chapters-content {
     @media (min-width: 1200px) {
       position: absolute;
       top: 0;
@@ -134,12 +195,10 @@
     flex-grow: 1;
   }
 
-  #room {
-   
-
+  #video-and-summary {
     @media (min-width: 1200px) {
       display: flex;
-    flex-wrap: wrap;
+      flex-wrap: wrap;
     }
   }
 
@@ -157,7 +216,6 @@
     background-color: $color6;
     //min-width: 35ch;
     display: flex;
-
   }
 
   :global(.dark) #chapterslessons {
@@ -167,17 +225,6 @@
   .scrollable {
     overflow-y: auto;
     // max-height: 550px;
-  }
-
-  .scrollable::-webkit-scrollbar {
-    width: 15px;
-  }
-  .scrollable::-webkit-scrollbar-thumb {
-    background-color: $color9;
-    border-radius: 1px;
-  }
-  .scrollable::-webkit-scrollbar-track {
-    background-color: $color1;
   }
 
   .chapter {
@@ -192,6 +239,27 @@
     cursor: pointer;
   }
 
+  .lesson-detail {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+
+    button {
+      cursor: pointer;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.3rem;
+      color: $color3;
+      background-color: $color6;
+      border: 1px solid $color0;
+    }
+    button:hover {
+      background-color: $color3;
+      color: $color6;
+    }
+  }
+
   .lesson {
     padding: 0.8rem;
     padding-left: 2rem;
@@ -203,7 +271,7 @@
   .lesson .duration {
     display: flex;
     align-items: center;
-    gap: 0.1rem;
+    gap: 0.2rem;
     margin-left: 0rem;
     font-size: 0.9rem;
   }
@@ -211,4 +279,30 @@
   .lesson.active {
     background: linear-gradient(90deg, $color10, $color8);
   }
+
+  #html-content {
+    padding: 1rem;
+    min-height: 200px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  // #html-content {
+  //   flex: 1 1 70%;
+  //   padding: 1rem;
+  //   background-color: $color4;
+  //   color: $color1;
+
+  //   img {
+  //     max-width: 100%;
+  //   }
+  // }
+
+  // #files-content {
+  //   flex: 1 1 30%;
+  //   background-color: $color3;
+  //   //min-width: 50ch;
+  // }
 </style>
