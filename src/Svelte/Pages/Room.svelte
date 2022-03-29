@@ -12,69 +12,97 @@
   </div>
   <div id="chapterslessons">
     <h2>Lessons</h2>
-    <div class="scrollable">
-      <div class="chapter">
-        <h3>01 - Course intro</h3>
-        <div class="v-spacer" />
-        <ChevronDown width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-      <div class="lesson active">
-        <h4>001 Course Structure</h4>
-        <div class="duration">
-          <Clock width="14" height="14" viewBox="0 0 24 24" />
-          4:15
+    <div class="chapters-wrapper scrollable">
+      <div class="chapters-content">
+        <div class="chapter">
+          <h3>01 - Course intro</h3>
+          <div class="v-spacer" />
+          <ChevronDown width="24" height="24" viewBox="0 0 24 24" />
+        </div>
+        <div class="lesson active">
+          <h4>001 Course Structure</h4>
+          <div class="duration">
+            <Clock width="14" height="14" viewBox="0 0 24 24" />
+            4:15
+          </div>
+        </div>
+        <div class="lesson">
+          <h4>002 Video blur fix</h4>
+          <div class="duration">
+            <Clock width="14" height="14" viewBox="0 0 24 24" />
+            12:51
+          </div>
+        </div>
+        <div class="lesson">
+          <h4>003 Course Review</h4>
+          <div class="duration">
+            <Clock width="14" height="14" viewBox="0 0 24 24" />
+            8:12
+          </div>
+        </div>
+        <div class="chapter">
+          <h3>02 - HTML tutorial</h3>
+          <div class="v-spacer" />
+          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+        </div>
+        <div class="chapter">
+          <h3>03 - HTML Coffee Project</h3>
+          <div class="v-spacer" />
+          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+        </div>
+        <div class="chapter">
+          <h3>04 - HTML tutorial</h3>
+          <div class="v-spacer" />
+          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+        </div>
+        <div class="chapter">
+          <h3>05 - HTML Coffee Project</h3>
+          <div class="v-spacer" />
+          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+        </div>
+        <div class="chapter">
+          <h3>06 - HTML tutorial</h3>
+          <div class="v-spacer" />
+          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+        </div>
+        <div class="chapter">
+          <h3>07 - HTML Coffee Project</h3>
+          <div class="v-spacer" />
+          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
         </div>
       </div>
-      <div class="lesson">
-        <h4>002 Video blur fix</h4>
-        <div class="duration">
-          <Clock width="14" height="14" viewBox="0 0 24 24" />
-          12:51
-        </div>
-      </div>
-      <div class="lesson">
-        <h4>003 Course Review</h4>
-        <div class="duration">
-          <Clock width="14" height="14" viewBox="0 0 24 24" />
-          8:12
-        </div>
-      </div>
-      <div class="chapter">
-        <h3>02 - HTML tutorial</h3>
-        <div class="v-spacer" />
-        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-      <div class="chapter">
-        <h3>03 - HTML Coffee Project</h3>
-        <div class="v-spacer" />
-        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-      <div class="chapter">
-        <h3>04 - HTML tutorial</h3>
-        <div class="v-spacer" />
-        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-      <div class="chapter">
-        <h3>05 - HTML Coffee Project</h3>
-        <div class="v-spacer" />
-        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-      <div class="chapter">
-        <h3>06 - HTML tutorial</h3>
-        <div class="v-spacer" />
-        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-      <div class="chapter">
-        <h3>07 - HTML Coffee Project</h3>
-        <div class="v-spacer" />
-        <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
-      </div>
-    </div>
+  </div>
   </div>
 </div>
 
 <style lang="scss">
   @import '../styles/colors.scss';
+
+  .chapters-wrapper{
+
+    background: red;
+    max-height: 300px;
+    overflow: auto;
+
+    @media (min-width: 1200px) {
+      max-height: unset;
+      flex: 1 0 auto;
+      position: relative;
+      overflow: auto;
+    }
+
+ 
+  }
+
+  .chapters-content{
+    @media (min-width: 1200px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
 
   h1 {
     margin: 0;
@@ -107,7 +135,12 @@
   }
 
   #room {
-    display: flex;
+   
+
+    @media (min-width: 1200px) {
+      display: flex;
+    flex-wrap: wrap;
+    }
   }
 
   #video-player {
@@ -115,14 +148,16 @@
     flex-grow: 1;
     flex-basis: 70%;
     background-color: black;
-    min-width: 60ch;
+    //min-width: 60ch;
   }
 
   #chapterslessons {
     flex: 1 1 30%;
     flex-direction: column;
     background-color: $color6;
-    min-width: 35ch;
+    //min-width: 35ch;
+    display: flex;
+
   }
 
   :global(.dark) #chapterslessons {
