@@ -23,6 +23,9 @@
     showVaultPathSelector = false
     const vaultPath = evt.detail
     window.localStorage.setItem('vaultPath', vaultPath)
+    // set base path for next time
+    const basePath = vaultPath.split('/').slice(0, -1).join('/')
+    window.localStorage.setItem('vaultBasePath', basePath)
     initVault(vaultPath)
   }
 

@@ -103,10 +103,9 @@ app.on('activate', function () {
 const defineIpc = () => {
   // ui methods
   // show open file dialog
-  ipcMain.handle('showOpenDialog', (evt, options: string[]) =>
+  ipcMain.handle('showOpenDialog', (evt, options: object) =>
     showOpenDialog(evt, options)
   )
-
   // fs methods
   // fs.stat
   ipcMain.handle('fs-stat', (_evt, path: string) => fsStat(path))

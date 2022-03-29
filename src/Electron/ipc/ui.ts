@@ -3,13 +3,9 @@ import { dialog, BrowserWindow, OpenDialogOptions } from 'electron'
 // show open file dialog
 export const showOpenDialog = async (
   evt: Event,
-  props: string[] = []
+  options: object = {}
 ): Promise<string> => {
-  console.log('showOpenDialog')
-  console.log(evt)
-  const { canceled, filePaths } = await dialog.showOpenDialog({
-    properties: props as OpenDialogOptions['properties']
-  })
+  const { canceled, filePaths } = await dialog.showOpenDialog(options)
   if (canceled) {
     return
   } else {

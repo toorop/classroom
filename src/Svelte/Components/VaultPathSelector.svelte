@@ -6,7 +6,15 @@
 
   // handle click button event
   const handleClick = async () => {
-    const path = await window.API.showOpenDialog(['openDirectory'])
+    // base path ?
+    const basePath = window.localStorage.getItem('vaultBasePath')
+    let openDialogOptions = {
+      title: 'Select a Libary',
+      defaultPath: basePath || '',
+      properties: ['openDirectory']
+    }
+
+    const path = await window.API.showOpenDialog(openDialogOptions)
     if (path) {
       dispatch('vault-path-selected', path)
     }
@@ -14,7 +22,7 @@
 </script>
 
 <div id="vaultpathselector">
-  <button on:click={handleClick}>Select vault</button>
+  <button on:click={handleClick}>Select Library</button>
 </div>
 
 <style lang="scss">

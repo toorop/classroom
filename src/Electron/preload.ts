@@ -4,7 +4,7 @@ import { contextBridge, ipcMain, ipcRenderer } from 'electron'
 // exposed to renderer process via contextBridge
 contextBridge.exposeInMainWorld('API', {
   // ui methods
-  showOpenDialog: (evt: Event, props: string[] = []) =>
+  showOpenDialog: (evt: Event, props: object = {}) =>
     ipcRenderer.invoke('showOpenDialog', evt, props),
 
   // fs methods

@@ -1,9 +1,15 @@
 /// <reference types="svelte" />
 import type { IVault } from './Classes/Vault'
 
+interface IOpenDialogOptions {
+  title?: string
+  defaultPath?: string
+  properties?: string[]
+}
+
 export interface API {
   // ui methods
-  showOpenDialog: (evt: Event, props?: string[]) => Promise<string>
+  showOpenDialog: (evt: Event, props?: IOpenDialogOptions) => Promise<string>
 
   // fs methods
   fsStat: (path: string) => Promise<object>

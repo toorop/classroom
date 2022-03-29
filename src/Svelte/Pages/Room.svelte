@@ -283,10 +283,6 @@
   #html-content {
     padding: 1rem;
     min-height: 200px;
-
-    img {
-      max-width: 100%;
-    }
   }
 
   // #html-content {
