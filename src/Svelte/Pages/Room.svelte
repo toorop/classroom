@@ -143,7 +143,6 @@
   @import '../styles/colors.scss';
 
   .chapters-wrapper {
-    background: red;
     max-height: 300px;
     overflow: auto;
 
@@ -167,9 +166,12 @@
 
   h1 {
     margin: 0;
+    margin-top: 0.2rem;
     margin-bottom: 1.5rem;
     padding-left: 1.5rem;
     color: $color5;
+    font-weight: normal;
+    font-size: 1.7rem;
   }
 
   h2 {
@@ -251,12 +253,10 @@
       align-items: center;
       padding: 0.3rem;
       color: $color3;
-      background-color: $color6;
-      border: 1px solid $color0;
-    }
-    button:hover {
       background-color: $color3;
-      color: $color6;
+      border: 1px solid $color6;
+      color: $color5;
+      font-size: 0.9rem;
     }
   }
 

@@ -1,45 +1,66 @@
 <script>
-  import Sun from '../../../public/img/icons/sun.svg'
-  import Moon from '../../../public/img/icons/moon.svg'
+  import { push } from 'svelte-spa-router'
+  import Folder from '../../../public/img/icons/folder.svg'
+  import Book from '../../../public/img/icons/book.svg'
+  import BookOpen from '../../../public/img/icons/book-open.svg'
 
-  let darkMode = true
-
-  function toggle() {
-    console.log('toggle')
-    darkMode = !darkMode
-    window.document.body.classList.toggle('dark')
+  const handleClickNewLibrary = () => {
+    window.localStorage.removeItem('vaultPath')
+    push('/')
   }
 </script>
 
 <nav>
-  <span id="theme-switcher" on:click={toggle}>
-    {#if darkMode}
-      <Sun />
-    {:else}
-      <Moon />
-    {/if}
+  <span class="icon" on:click={handleClickNewLibrary}>
+    <Folder width="18" height="18" />
+    <span class="tooltip">Open new library</span>
+  </span>
+  <span class="icon">
+    <Book width="18" height="18" viewBox="0 0 24 24" />
+    <span class="tooltip">Lessons</span>
+  </span>
+  <span class="icon">
+    <BookOpen width="18" height="18" viewBox="0 0 24 24" />
+    <span class="tooltip">Continue Last Lesson</span>
   </span>
 </nav>
 
 <style lang="scss">
   @import '../styles/colors.scss';
 
-  :global(.dark) {
-    #theme-switcher {
-      color: $color4;
-    }
-  }
-
   nav {
     display: flex;
-    flex-direction: row-reverse;
     flex-grow: 1;
-    margin: 0;
-    padding: 1rem;
-    z-index: 1;
+    align-content: flex-end;
+    gap: 1rem;
+    padding: 0.3rem;
+    padding-top: 0.6rem;
+    padding-left: 1rem;
+    margin-bottom: 1.2rem;
+    background-color: $color1;
+    border-bottom: 1px solid $color2;
+    border-top: 1px solid $color2;
   }
 
-  #theme-switcher {
+  nav > * {
     cursor: pointer;
+  }
+
+  .icon {
+    color: $color5;
+  }
+
+  .icon:hover .tooltip {
+    display: block;
+  }
+
+  .tooltip {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    background-color: $color1;
   }
 </style>
