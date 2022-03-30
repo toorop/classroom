@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "typeRoots": ["src/types"]
+    "typeRoots": ["src/types"],
+    "module": "esnext",
+    "types": ["svelte", "@types/snowpack-env"]
   },
   "extends": "@tsconfig/svelte/tsconfig.json",
   "include": ["src/Svelte/**/*", "src/types/**/*"],

@@ -6,7 +6,7 @@ import { getVault } from './ipc/vault'
 import { fsGetMime, fsStat, fsRead, fsWalk, fsReadDir } from './ipc/fs'
 import { showOpenDialog } from './ipc/ui'
 
-const loadURL = serve({ directory: 'public' })
+const loadURL = serve({ directory: 'public/build' })
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -37,7 +37,7 @@ function createWindow() {
       // enableRemoteModule: true,
       contextIsolation: true
     },
-    icon: path.join(__dirname, 'public/favicon.png'),
+    icon: path.join(__dirname, 'favicon.png'),
     show: false
   })
 
