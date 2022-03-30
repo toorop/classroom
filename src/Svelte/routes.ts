@@ -1,6 +1,6 @@
 import Home from './Pages/Home.svelte'
 import Courses from './Pages/Courses.svelte'
-import Room from './Pages/Room.svelte'
+import Course from './Pages/Course.svelte'
 import NotFound from './Pages/NotFound.svelte'
 
 const routes = {
@@ -8,7 +8,7 @@ const routes = {
 
   '/courses': Courses,
 
-  '/room': Room,
+  '/course/:name': Course,
 
   // catchall
   '*': NotFound

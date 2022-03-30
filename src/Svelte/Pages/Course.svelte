@@ -1,13 +1,18 @@
 <script>
-  import Clock from '../../../public/img/icons/clock.svg'
-  import ChevronsDown from '../../../public/img/icons/chevrons-down.svg'
-  import ChevronDown from '../../../public/img/icons/chevron-down.svg'
-  import ChevronRight from '../../../public/img/icons/chevrons-right.svg'
-  import Folder from '../../../public/img/icons/folder.svg'
+  import { location } from 'svelte-spa-router'
+  import Icon from '@iconify/svelte'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
+  import { onMount } from 'svelte'
+
+  export let params = {}
+
+  onMount(() => {
+    console.log('params', params)
+    console.log('location', location)
+  })
 </script>
 
-<h1>Udemy - HTML&CSS Course 2022 Flexbox & Grid</h1>
+<h1>{params.name}</h1>
 <div id="video-and-summary">
   <div id="video-player">
     <VideoPlayer />
@@ -19,13 +24,13 @@
         <div class="chapter">
           <h3>01 - Course intro</h3>
           <div class="v-spacer" />
-          <ChevronsDown />
+          <Icon icon="charm:chevrons-down" width="24" />
         </div>
         <div class="lesson active">
           <h4>001 Course Structure</h4>
           <div class="lesson-detail">
             <div class="duration">
-              <Clock width="14" height="14" />
+              <Icon icon="charm:clock" width="16" />
               4:15
             </div>
           </div>
@@ -34,14 +39,14 @@
           <h4>002 Video blur fix</h4>
           <div class="lesson-detail">
             <div class="duration">
-              <Clock width="14" height="14" />
+              <Icon icon="charm:clock" width="16" />
               12:51
             </div>
             <div class="v-spacer" />
             <button>
-              <Folder width="14" height="14" />
+              <Icon icon="ant-design:folder-filled" width="16" />
               <span> Ressources</span>
-              <ChevronDown width="14" height="14" viewBox="0 0 24 24" />
+              <Icon icon="charm:chevron-down" width="16" />
             </button>
           </div>
         </div>
@@ -49,7 +54,7 @@
           <h4>003 Course Review</h4>
           <div class="lesson-detail">
             <div class="duration">
-              <Clock width="14" height="14" />
+              <Icon icon="charm:clock" width="16" />
               8:12
             </div>
           </div>
@@ -57,32 +62,32 @@
         <div class="chapter">
           <h3>02 - HTML tutorial</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" />
+          <Icon icon="charm:chevrons-right" width="24" />
         </div>
         <div class="chapter">
           <h3>03 - HTML Coffee Project</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" />
+          <Icon icon="charm:chevrons-right" width="24" />
         </div>
         <div class="chapter">
           <h3>04 - HTML tutorial</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" />
+          <Icon icon="charm:chevrons-right" width="24" />
         </div>
         <div class="chapter">
           <h3>05 - HTML Coffee Project</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" />
+          <Icon icon="charm:chevrons-right" width="24" />
         </div>
         <div class="chapter">
           <h3>06 - HTML tutorial</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+          <Icon icon="bi:chevron-double-right" width="24" />
         </div>
         <div class="chapter">
           <h3>07 - HTML Coffee Project</h3>
           <div class="v-spacer" />
-          <ChevronRight width="24" height="24" viewBox="0 0 24 24" />
+          <Icon icon="bi:chevron-double-right" width="24" />
         </div>
       </div>
     </div>

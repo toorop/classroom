@@ -1,8 +1,6 @@
 <script>
   import { push } from 'svelte-spa-router'
-  import Folder from '../../../public/img/icons/folder.svg'
-  import Book from '../../../public/img/icons/book.svg'
-  import BookOpen from '../../../public/img/icons/book-open.svg'
+  import Icon from '@iconify/svelte'
 
   const handleClickNewLibrary = () => {
     window.localStorage.removeItem('vaultPath')
@@ -12,15 +10,15 @@
 
 <nav>
   <span class="icon" on:click={handleClickNewLibrary}>
-    <Folder width="18" height="18" />
+    <Icon icon="ant-design:folder-filled" width="16" />
     <span class="tooltip">Open new library</span>
   </span>
   <span class="icon" on:click={() => push('/courses')}>
-    <Book width="18" height="18" viewBox="0 0 24 24" />
+    <Icon icon="fluent:library-28-filled" width="16" />
     <span class="tooltip">Courses</span>
   </span>
   <span class="icon">
-    <BookOpen width="18" height="18" viewBox="0 0 24 24" />
+    <Icon icon="ic:baseline-play-lesson" width="16" />
     <span class="tooltip">Continue Last Lesson</span>
   </span>
 </nav>
