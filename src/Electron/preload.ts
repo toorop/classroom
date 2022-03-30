@@ -10,7 +10,9 @@ contextBridge.exposeInMainWorld('API', {
   // fs methods
   fsStat: (path: string) => ipcRenderer.invoke('fs-stat', path),
   fsRead: (path: string) => ipcRenderer.invoke('fs-read', path),
-  fsWalk: (dir: string) => ipcRenderer.invoke('fs-walk', dir),
+  fsReadDir: (path: string) => ipcRenderer.invoke('fs-readDir', path),
+  fsWalk: (dir: string, depth?: number) =>
+    ipcRenderer.invoke('fs-walk', dir, depth),
   fsMime: (path: string) => ipcRenderer.invoke('fs-mime', path),
 
   // vault methods

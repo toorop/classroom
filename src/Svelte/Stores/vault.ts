@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store'
-import type { IVault } from '../Classes/Vault'
+import type { IVault } from '../global'
 
-export const vaultStore = writable<IVault>({
+const VaultStore = writable<IVault>({
   courses: []
 })
+
+export default VaultStore

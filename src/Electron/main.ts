@@ -3,7 +3,7 @@ import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import * as path from 'path'
 import * as serve from 'electron-serve'
 import { getVault } from './ipc/vault'
-import { fsGetMime, fsStat, fsRead, fsWalk } from './ipc/fs'
+import { fsGetMime, fsStat, fsRead, fsWalk, fsReadDir } from './ipc/fs'
 import { showOpenDialog } from './ipc/ui'
 
 const loadURL = serve({ directory: 'public' })
@@ -18,9 +18,10 @@ function isDev() {
 
 if (isDev()) {
   // enable hot reloading
-  require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, '..', 'node_modules', '.bin', 'electron')
-  })
+  //require('electron-reload')
+  // (__dirname, {
+  //   electron: path.join(__dirname, '..', 'node_modules', '.bin', 'electron')
+  // })
 }
 
 function createWindow() {
@@ -111,8 +112,12 @@ const defineIpc = () => {
   ipcMain.handle('fs-stat', (_evt, path: string) => fsStat(path))
   // read file
   ipcMain.handle('fs-read', (_evt, path: string) => fsRead(path))
+  // fs.readdir
+  ipcMain.handle('fs-readDir', (_evt, path: string) => fsReadDir(path))
   // fs walk
-  ipcMain.handle('fs-walk', (_evt, dir: string) => fsWalk(dir))
+  ipcMain.handle('fs-walk', (_evt, dir: string, depth: number) =>
+    fsWalk(dir, depth)
+  )
   // get mimetype
   ipcMain.handle('fs-mime', (_evt, path: string) => fsGetMime(path))
 

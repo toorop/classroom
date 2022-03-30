@@ -15,9 +15,9 @@
     <Folder width="18" height="18" />
     <span class="tooltip">Open new library</span>
   </span>
-  <span class="icon">
+  <span class="icon" on:click={() => push('/courses')}>
     <Book width="18" height="18" viewBox="0 0 24 24" />
-    <span class="tooltip">Lessons</span>
+    <span class="tooltip">Courses</span>
   </span>
   <span class="icon">
     <BookOpen width="18" height="18" viewBox="0 0 24 24" />

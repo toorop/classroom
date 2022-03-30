@@ -3,6 +3,7 @@
   import { onMount } from 'svelte'
   import { push } from 'svelte-spa-router'
   import { Vault } from '../Classes/Vault'
+  import VaultStore from '../Stores/vault'
   import VaultPathSelector from '../Components/VaultPathSelector.svelte'
 
   let showVaultPathSelector = false
@@ -20,7 +21,6 @@
   })
 
   const setVaulPath = (evt: CustomEvent) => {
-    showVaultPathSelector = false
     const vaultPath = evt.detail
     window.localStorage.setItem('vaultPath', vaultPath)
     // set base path for next time
@@ -32,8 +32,16 @@
   // init vault
   const initVault = async (vaultPath: string) => {
     const vault = new Vault(vaultPath)
-    const content = await vault.load()
-    push('/room')
+    // get courses info
+    const courses = await vault.loadCourses()
+    console.log(courses)
+    // update state
+    VaultStore.set(vault.content)
+    push('/courses')
+
+    // get vault infos
+    //const content = await vault.load()
+    //push('/room')
 
     // check vault path
     // must be empty or have a good structure

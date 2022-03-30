@@ -1,25 +1,4 @@
-// represents a file in the vault
-export interface IFile {
-  name: string
-  path: string
-  type: string
-}
-
-export interface IChapter {
-  name: string
-  files?: IFile[]
-}
-
-export interface ICourse {
-  name: string
-  chapters?: IChapter[]
-  files?: IFile[]
-}
-
-export interface IVault {
-  path?: string
-  courses: ICourse[]
-}
+import type { IVault, IChapter, ICourse } from '../global.d'
 
 export class Vault {
   content?: IVault
@@ -32,9 +11,15 @@ export class Vault {
     }
   }
 
-  /**
-   * getCourse
-   */
+  // load courses but (only name)
+  public async loadCourses(): Promise<ICourse[]> {
+    // get courses folders
+    const courses = await window.API.fsReadDir(this.content.path)
+    this.content.courses = courses
+    return courses
+  }
+
+  // load all data  in vault
   public async load(): Promise<IVault> {
     // get file in path
     const files = await window.API.fsWalk(this.content.path)
