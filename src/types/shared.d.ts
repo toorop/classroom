@@ -1,5 +1,5 @@
 // result from stats
-interface IFsStatsResult {
+export interface IFsStatsResult {
   name: string
   dev: number
   isFile: boolean

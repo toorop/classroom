@@ -2,11 +2,12 @@ import * as fs from 'fs'
 import * as path from 'path'
 const fsp = require('fs').promises
 var mime = require('mime-types')
+import type { IFsStatsResult } from '../../types/shared'
 
 // fs.stat(path)
 export const fsStat = (path: string) => {
   return new Promise((resolve, reject) => {
-    fs.stat(path, (err, stats) => {
+    fs.stat(path, { bigint: true }, (err, stats) => {
       if (err) {
         reject(err)
       } else {
