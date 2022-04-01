@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 const fsp = require('fs').promises
 var mime = require('mime-types')
+import { VideoDuration } from 'video-duration'
 import type { IFsStatsResult } from '../../types/shared'
 
 // fs.stat(path)
@@ -52,6 +53,12 @@ export const fsReadDir = (...paths: string[]): IFsStatsResult[] => {
 // get file type
 export const fsGetMime = (path: string) => {
   return mime.lookup(path)
+}
+
+// get video duration
+export const fsGetVideoDuration = (path: string) => {
+  const vd = new VideoDuration(path)
+  return vd.getDuration()
 }
 
 // helpers

@@ -1,6 +1,7 @@
 import { getPathSeparator } from '../Libs/utils'
 
 import type { IVault, IChapter, ICourse, IFile } from '../global.d'
+import type { IFsStatsResult } from '../../types/shared'
 
 export class Vault {
   content?: IVault
@@ -37,7 +38,7 @@ export class Vault {
       chapters: [],
       files: []
     }
-    console.log(courseName)
+    //console.log(courseName)
     const pathSeparator = getPathSeparator()
     // get chapters or (video and files) if no chapters
     const firstFloor = await window.API.fsReadDir(this.content.path, courseName)
@@ -45,17 +46,10 @@ export class Vault {
     for (const entity of firstFloor) {
       if (entity.isFile) {
         // get mime type
-        const mimeType = await window.API.fsMime(
-          [this.content.path, entity.name].join(getPathSeparator())
+        const file = await this.getIfileWithMimeAndInfo(
+          entity,
+          [this.content.path, courseName, entity.name].join(getPathSeparator())
         )
-        const file: IFile = {
-          id: `${entity.dev}-${entity.ino}`,
-          name: entity.name,
-          path: [this.content.path, courseName, entity.name].join(
-            pathSeparator
-          ),
-          type: mimeType
-        }
         course.files.push(file)
       } else {
         // directory => chapter
@@ -68,28 +62,19 @@ export class Vault {
           files: []
         }
 
-        // get all files
+        // get all files for this chapter
         const files = await window.API.fsReadDir(
           this.content.path,
           courseName,
           entity.name
         )
+        // populate chapter files
         for (const entity2 of files) {
           if (entity2.isFile) {
-            // get mime type
-            const mimeType = await window.API.fsMime(
-              [this.content.path, courseName, entity2.name].join(
-                getPathSeparator()
-              )
+            const file = await this.getIfileWithMimeAndInfo(
+              entity2,
+              [this.content.path, courseName, entity2.name].join(pathSeparator)
             )
-            const file: IFile = {
-              id: `${entity.dev}-${entity.ino}`,
-              name: entity2.name,
-              path: [this.content.path, courseName, entity2.name].join(
-                pathSeparator
-              ),
-              type: mimeType
-            }
             chapter.files.push(file)
           }
         }
@@ -97,6 +82,25 @@ export class Vault {
       }
     }
     return course
+  }
+
+  // return  files
+  public async getIfileWithMimeAndInfo(
+    fsStat: IFsStatsResult,
+    path: string
+  ): Promise<IFile> {
+    const mimeType = await window.API.fsMime(path)
+    const file: IFile = {
+      id: `${fsStat.dev}-${fsStat.ino}`,
+      name: fsStat.name,
+      path,
+      type: mimeType
+    }
+    // if video get duration
+    if (mimeType === 'video/mp4') {
+      file.duration = await window.API.fsVideoDuration(path)
+    }
+    return file
   }
 }
 

@@ -6,6 +6,7 @@ export interface IFile {
   name: string
   path: string
   type: string
+  duration?: number
 }
 
 // represents a chapter of a course
@@ -47,6 +48,7 @@ export interface API {
   fsReadDir: (...path: string[]) => Promise<IFsStatsResult[]>
   fsWalk: (dir: string, depth?: number) => Promise<string>
   fsMime: (path: string) => Promise<string>
+  fsVideoDuration: (path: string) => Promise<number>
 
   // vault methods
   getVault: () => Promise<IVault>

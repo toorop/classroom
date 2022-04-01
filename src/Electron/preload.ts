@@ -14,6 +14,8 @@ contextBridge.exposeInMainWorld('API', {
   fsWalk: (dir: string, depth?: number) =>
     ipcRenderer.invoke('fs-walk', dir, depth),
   fsMime: (path: string) => ipcRenderer.invoke('fs-mime', path),
+  fsVideoDuration: (path: string) =>
+    ipcRenderer.invoke('fs-videoDuration', path),
 
   // vault methods
   getVault: () => ipcRenderer.invoke('getVault')

@@ -22,7 +22,7 @@
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.4",
     "concurrently": "^7.0.0",
-    "electron": "^17.2.0",
+    "electron": "^18.0.1",
     "electron-builder": "^22.14.13",
     "electron-devtools-installer": "^3.2.0",
     "node-sass": "^7.0.1",
@@ -43,7 +43,8 @@
     "mime-types": "^2.1.35",
     "sirv-cli": "^2.0.0",
     "svelte": "^3.0.0",
-    "svelte-spa-router": "^3.2.0"
+    "svelte-spa-router": "^3.2.0",
+    "video-duration": "^0.1.2"
   },
   "build": {
     "icon": "public/favicon.png",

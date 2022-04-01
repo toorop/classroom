@@ -3,7 +3,14 @@ import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import * as path from 'path'
 import * as serve from 'electron-serve'
 import { getVault } from './ipc/vault'
-import { fsGetMime, fsStat, fsRead, fsWalk, fsReadDir } from './ipc/fs'
+import {
+  fsGetMime,
+  fsStat,
+  fsRead,
+  fsWalk,
+  fsReadDir,
+  fsGetVideoDuration
+} from './ipc/fs'
 import { showOpenDialog } from './ipc/ui'
 
 const loadURL = serve({ directory: 'public/build' })
@@ -122,6 +129,11 @@ const defineIpc = () => {
   )
   // get mimetype
   ipcMain.handle('fs-mime', (_evt, path: string) => fsGetMime(path))
+
+  // get video duration
+  ipcMain.handle('fs-videoDuration', (_evt, path: string) =>
+    fsGetVideoDuration(path)
+  )
 
   // vault methods
   ipcMain.handle('getVault', getVault)
