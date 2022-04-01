@@ -228,7 +228,7 @@
     flex-shrink: 1;
     flex-grow: 1;
     flex-basis: 70%;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     //min-width: 60ch;
   }
 

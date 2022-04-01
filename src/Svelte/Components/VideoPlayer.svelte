@@ -40,6 +40,10 @@
   }
 
   video {
+    display: block;
     width: 100%;
+  }
+  video:focus {
+    outline: none;
   }
 </style>
