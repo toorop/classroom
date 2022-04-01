@@ -1,14 +1,28 @@
-<script>
+<script lang="ts">
+  import { onMount } from 'svelte'
   import { location } from 'svelte-spa-router'
   import Icon from '@iconify/svelte'
+  import VaultStore from '../Stores/vault'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
-  import { onMount } from 'svelte'
+  import type { IVault } from '../global.d'
+  import { Vault } from '../Classes/Vault'
 
-  export let params = {}
+  export let params: {
+    name: string
+    id: string
+  }
 
-  onMount(() => {
-    console.log('params', params)
-    console.log('location', location)
+  onMount(async () => {
+    let vaultContent: IVault
+
+    VaultStore.subscribe((v) => {
+      vaultContent = v
+    })
+    const vault = new Vault()
+    vault.content = vaultContent
+    // get course
+    const course = await vault.getCourse(params.name, params.id)
+    console.log(course)
   })
 </script>
 
@@ -17,6 +31,7 @@
   <div id="video-player">
     <VideoPlayer />
   </div>
+  <!--playlist-->
   <div id="chapterslessons">
     <h2>Course content</h2>
     <div class="chapters-wrapper scrollable">

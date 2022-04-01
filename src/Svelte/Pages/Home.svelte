@@ -31,7 +31,8 @@
 
   // init vault
   const initVault = async (vaultPath: string) => {
-    const vault = new Vault(vaultPath)
+    const vault = new Vault()
+    vault.content.path = vaultPath
     // get courses info
     const courses = await vault.loadCourses()
     console.log(courses)

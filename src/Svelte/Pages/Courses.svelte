@@ -5,7 +5,7 @@
   import type { IVault } from '../global.d'
 
   let vault: IVault
-  const courses = VaultStore.subscribe((v) => {
+  VaultStore.subscribe((v) => {
     vault = v
     console.log(vault)
   })
@@ -21,7 +21,10 @@
 <div id="wrapper">
   <div id="courses">
     {#each vault.courses as course}
-      <div class="course" on:click={() => push(`/course/${course.name}`)}>
+      <div
+        class="course"
+        on:click={() => push(`/course/${course.name}/${course.id}`)}
+      >
         <p>{course.name}</p>
         <div class="spacer" />
         <Icon id="iconPlay" icon="carbon:play-filled-alt" width="32" />

@@ -113,7 +113,9 @@ const defineIpc = () => {
   // read file
   ipcMain.handle('fs-read', (_evt, path: string) => fsRead(path))
   // fs.readdir
-  ipcMain.handle('fs-readDir', (_evt, path: string) => fsReadDir(path))
+  ipcMain.handle('fs-readDir', (_evt, ...paths: string[]) =>
+    fsReadDir(...paths)
+  )
   // fs walk
   ipcMain.handle('fs-walk', (_evt, dir: string, depth: number) =>
     fsWalk(dir, depth)

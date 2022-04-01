@@ -31,11 +31,14 @@ export const fsRead = (path: string) => {
 }
 
 // read a direcectory and return a list of files
-export const fsReadDir = (dir: string): IFsStatsResult[] => {
+export const fsReadDir = (...paths: string[]): IFsStatsResult[] => {
+  console.log(paths)
+  const dirPath = path.join(...paths)
+  console.log(`fsReadDir: ${dirPath}`)
   let result: IFsStatsResult[] = []
-  const files = fs.readdirSync(dir)
+  const files = fs.readdirSync(dirPath)
   for (const f in files) {
-    const stats = fs.statSync(path.join(dir, files[f]))
+    const stats = fs.statSync(path.join(dirPath, files[f]))
     result.push({
       name: files[f],
       dev: stats.dev,

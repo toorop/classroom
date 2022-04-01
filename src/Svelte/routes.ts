@@ -8,7 +8,7 @@ const routes = {
 
   '/courses': Courses,
 
-  '/course/:name': Course,
+  '/course/:name/:id': Course,
 
   // catchall
   '*': NotFound

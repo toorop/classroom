@@ -2,6 +2,7 @@
 
 // represents a file in the vault
 export interface IFile {
+  id: string
   name: string
   path: string
   type: string
@@ -9,12 +10,15 @@ export interface IFile {
 
 // represents a chapter of a course
 export interface IChapter {
+  id: string
   name: string
+  path: string
   files?: IFile[]
 }
 
 // represents a course
 export interface ICourse {
+  id?: string
   name: string
   chapters?: IChapter[]
   files?: IFile[]
@@ -40,7 +44,7 @@ export interface API {
   // fs methods
   fsStat: (path: string) => Promise<object>
   fsRead: (path: string) => Promise<Buffer>
-  fsReadDir: (path: string) => Promise<File[]>
+  fsReadDir: (...path: string[]) => Promise<IFsStatsResult[]>
   fsWalk: (dir: string, depth?: number) => Promise<string>
   fsMime: (path: string) => Promise<string>
 
