@@ -1,5 +1,5 @@
+import VaultStore from '../Stores/vault'
 import { getPathSeparator } from '../Libs/utils'
-
 import type { IVault, IChapter, ICourse, IFile } from '../global.d'
 import type { IFsStatsResult } from '../../types/shared'
 
@@ -8,10 +8,15 @@ export class Vault {
 
   // constructor
   constructor() {
-    this.content = {
-      path: '',
-      courses: []
-    }
+    //  subscribe from store for properties
+    VaultStore.subscribe((vault) => {
+      this.content = vault
+    })
+  }
+
+  // set path
+  public setPath(path: string) {
+    VaultStore.update((state) => ({ ...state, path: path }))
   }
 
   // load courses but (only name)
@@ -26,13 +31,18 @@ export class Vault {
       }
       courses.push(course)
     }
-    this.content.courses = courses
+    VaultStore.update((state) => ({ ...state, courses: courses }))
     return courses
   }
 
   // return course
-  public async getCourse(courseName: string, id: string): Promise<ICourse> {
-    let course: ICourse = {
+  public async loadCourse(courseName: string, id: string): Promise<ICourse> {
+    // already loaded ? => in strore
+    let course = this.getCourseById(id)
+    if (course && course.chapters) {
+      return course
+    }
+    course = {
       id,
       name: courseName,
       chapters: [],
@@ -83,7 +93,56 @@ export class Vault {
         course.chapters.push(chapter)
       }
     }
+    // set in store
+    // get old courses list
+    const oldCourses = this.content.courses
+    // filter to remove this course
+    const newCourses = oldCourses.filter((course) => course.id !== id)
+    // add new course
+    newCourses.push(course)
+    // order by name
+    newCourses.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      }
+      if (a.name > b.name) {
+        return 1
+      }
+      return 0
+    })
+    // update store
+    VaultStore.update((state) => ({ ...state, courses: newCourses }))
     return course
+  }
+
+  // get course by id from memory
+  public getCourseById(courseId: string): ICourse {
+    console.log(this.content.courses)
+    console.log('searching course:' + courseId)
+    const course = this.content.courses.find((course) => course.id === courseId)
+    console.log('found course:' + course.id)
+    return course
+  }
+
+  // get chapter by id from memory
+  public getChapterById(courseId: string, chapterId: string): IChapter {
+    console.log('searching chapter:' + chapterId)
+    const course = this.getCourseById(courseId)
+    console.log(course)
+    if (!course) return undefined
+    return course.chapters.find((chapter) => chapter.id === chapterId)
+  }
+
+  // get file by id from memory
+  public getFileById(
+    courseId: string,
+    chapterId: string,
+    fileId: string
+  ): IFile {
+    console.log('searching file:' + fileId)
+    const chapter = this.getChapterById(courseId, chapterId)
+    if (!chapter) return undefined
+    return chapter.files.find((file) => file.id === fileId)
   }
 
   // return  files
@@ -103,6 +162,33 @@ export class Vault {
       file.duration = await window.API.fsVideoDuration(path)
     }
     return file
+  }
+
+  // return path of a video file
+  // todo handle file not found
+  public getVideoPath(
+    courseId: string,
+    chapterId: string,
+    fileId: string
+  ): string {
+    console.log(
+      'searching course:',
+      courseId,
+      'chapter:',
+      chapterId,
+      'file:',
+      fileId
+    )
+    if (
+      courseId.length === 0 ||
+      chapterId.length === 0 ||
+      fileId.length === 0
+    ) {
+      return ''
+    }
+
+    const file = this.getFileById(courseId, chapterId, fileId)
+    return file.path
   }
 }
 

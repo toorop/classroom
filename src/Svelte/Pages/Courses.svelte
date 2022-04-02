@@ -2,25 +2,14 @@
   import Icon from '@iconify/svelte'
   import { push } from 'svelte-spa-router'
   import VaultStore from '../Stores/vault'
-  import type { IVault } from '../global.d'
-
-  let vault: IVault
-  VaultStore.subscribe((v) => {
-    vault = v
-    console.log(vault)
-  })
-
-  // const handleClickGoToCourse = (course: string) => {
-  //   push(`/courses/${course}`)
-  // }
 </script>
 
 <div class="title">
-  <h1>{vault.courses.length} Courses in this library</h1>
+  <h1>{$VaultStore.courses.length} Courses in this library</h1>
 </div>
 <div id="wrapper">
   <div id="courses">
-    {#each vault.courses as course}
+    {#each $VaultStore.courses as course}
       <div
         class="course"
         on:click={() => push(`/course/${course.name}/${course.id}`)}

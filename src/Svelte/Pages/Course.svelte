@@ -2,7 +2,8 @@
   import { onMount } from 'svelte'
   import { location } from 'svelte-spa-router'
   import Icon from '@iconify/svelte'
-  import VaultStore from '../Stores/vault'
+  import { TrackingStore } from '../Stores/tracking'
+  import type { ITracking } from '../Stores/tracking'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
   import type { ICourse, IVault } from '../global.d'
   import ListChapter from '../Components/ListChapter.svelte'
@@ -13,6 +14,9 @@
     id: string
   }
 
+  let selectedChapter: string
+  let selectedCourse: string
+
   let course: ICourse = {
     id: params.id,
     name: params.name,
@@ -20,16 +24,25 @@
   }
 
   $: onMount(async () => {
-    let vaultContent: IVault
-
-    VaultStore.subscribe((v) => {
-      vaultContent = v
-    })
     const vault = new Vault()
-    vault.content = vaultContent
+
     // get course
-    course = await vault.getCourse(params.name, params.id)
+    course = await vault.loadCourse(params.name, params.id)
     console.log(course)
+
+    let tracking: ITracking
+    // init  tracking
+    TrackingStore.subscribe((t) => {
+      tracking = t
+    })
+
+    // update store
+    TrackingStore.update((state) => ({
+      ...state,
+      currentCourse: course.id,
+      currentChapter: course.chapters[0].id,
+      currentLesson: course.chapters[0].files[0].id
+    }))
   })
 
   // format time

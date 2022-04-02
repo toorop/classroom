@@ -32,12 +32,12 @@
   // init vault
   const initVault = async (vaultPath: string) => {
     const vault = new Vault()
-    vault.content.path = vaultPath
+    vault.setPath(vaultPath)
+    //vault.content.path = vaultPath
     // get courses info
     const courses = await vault.loadCourses()
     console.log(courses)
     // update state
-    VaultStore.set(vault.content)
     push('/courses')
 
     // get vault infos

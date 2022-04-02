@@ -1,11 +1,27 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
+  import { TrackingStore } from '../Stores/tracking'
+  import type { ITracking } from '../Stores/tracking'
   import type { IChapter, ICourse } from '../global.d'
+
+  let tracking: ITracking
+  TrackingStore.subscribe((t) => {
+    tracking = t
+  })
 
   export let chapter: IChapter = {
     id: '',
     name: '',
     path: ''
+  }
+
+  // change chapter
+  const updateCurrentChapter = (id: string) => {
+    $TrackingStore.currentChapter = id
+  }
+  // change lesson
+  const updateCurrentLesson = (id: string) => {
+    $TrackingStore.currentLesson = id
   }
 
   // format time
@@ -17,24 +33,34 @@
   }
 </script>
 
-<div class="chapter">
+<div class="chapter" on:click={() => updateCurrentChapter(chapter.id)}>
   <h3>{chapter.name}</h3>
   <div class="v-spacer" />
-  <Icon icon="charm:chevrons-right" width="24" />
+  <Icon
+    icon={tracking.currentChapter === chapter.id
+      ? 'charm:chevrons-down'
+      : 'charm:chevrons-right'}
+    width="24"
+  />
 </div>
-{#each chapter.files as file}
-  {#if file.type === 'video/mp4'}
-    <div class="lesson">
-      <h4>{file.name}</h4>
-      <div class="lesson-detail">
-        <div class="duration">
-          <Icon icon="charm:clock" width="16" />
-          {formatTime(file.duration)}
+{#if tracking.currentChapter === chapter.id}
+  {#each chapter.files as file}
+    {#if file.type === 'video/mp4'}
+      <div
+        class="lesson {tracking.currentLesson === file.id ? 'active' : ''}"
+        on:click={() => updateCurrentLesson(file.id)}
+      >
+        <h4>{file.name}</h4>
+        <div class="lesson-detail">
+          <div class="duration">
+            <Icon icon="charm:clock" width="16" />
+            {formatTime(file.duration)}
+          </div>
         </div>
       </div>
-    </div>
-  {/if}
-{/each}
+    {/if}
+  {/each}
+{/if}
 
 <style lang="scss">
   @import '../styles/colors.scss';
@@ -73,6 +99,7 @@
     padding-top: 0.1rem;
     border-bottom: 1px solid $color9;
     background-color: $color3;
+    cursor: pointer;
   }
 
   .lesson-detail {
