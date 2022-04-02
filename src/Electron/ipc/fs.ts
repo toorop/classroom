@@ -2,7 +2,6 @@ import * as fs from 'fs'
 import * as path from 'path'
 const fsp = require('fs').promises
 var mime = require('mime-types')
-import { VideoDuration } from 'video-duration'
 import type { IFsStatsResult } from '../../types/shared'
 
 // fs.stat(path)
@@ -33,9 +32,7 @@ export const fsRead = (path: string) => {
 
 // read a direcectory and return a list of files
 export const fsReadDir = (...paths: string[]): IFsStatsResult[] => {
-  console.log(paths)
   const dirPath = path.join(...paths)
-  console.log(`fsReadDir: ${dirPath}`)
   let result: IFsStatsResult[] = []
   const files = fs.readdirSync(dirPath)
   for (const f in files) {
@@ -56,9 +53,10 @@ export const fsGetMime = (path: string) => {
 }
 
 // get video duration
-export const fsGetVideoDuration = (path: string) => {
-  const vd = new VideoDuration(path)
-  return vd.getDuration()
+export const fsGetVideoDuration = async (path: string): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    resolve(0)
+  })
 }
 
 // helpers

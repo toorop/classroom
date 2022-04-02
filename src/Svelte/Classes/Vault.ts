@@ -73,7 +73,9 @@ export class Vault {
           if (entity2.isFile) {
             const file = await this.getIfileWithMimeAndInfo(
               entity2,
-              [this.content.path, courseName, entity2.name].join(pathSeparator)
+              [this.content.path, courseName, entity.name, entity2.name].join(
+                pathSeparator
+              )
             )
             chapter.files.push(file)
           }

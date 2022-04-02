@@ -4,7 +4,8 @@
   import Icon from '@iconify/svelte'
   import VaultStore from '../Stores/vault'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
-  import type { IVault } from '../global.d'
+  import type { ICourse, IVault } from '../global.d'
+  import ListChapter from '../Components/ListChapter.svelte'
   import { Vault } from '../Classes/Vault'
 
   export let params: {
@@ -12,7 +13,13 @@
     id: string
   }
 
-  onMount(async () => {
+  let course: ICourse = {
+    id: params.id,
+    name: params.name,
+    chapters: []
+  }
+
+  $: onMount(async () => {
     let vaultContent: IVault
 
     VaultStore.subscribe((v) => {
@@ -21,9 +28,17 @@
     const vault = new Vault()
     vault.content = vaultContent
     // get course
-    const course = await vault.getCourse(params.name, params.id)
+    course = await vault.getCourse(params.name, params.id)
     console.log(course)
   })
+
+  // format time
+  function formatTime(time: number): string {
+    time = time / 1000
+    const minutes = Math.floor(time / 60)
+    const seconds = Math.floor(time % 60)
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+  }
 </script>
 
 <h1>{params.name}</h1>
@@ -32,10 +47,16 @@
     <VideoPlayer />
   </div>
   <!--playlist-->
-  <div id="chapterslessons">
+  <div id="playlist">
     <h2>Course content</h2>
-    <div class="chapters-wrapper scrollable">
+    <div class="course-wrapper scrollable">
       <div class="chapters-content">
+        {#if course.chapters?.length !== 0}
+          {#each course.chapters as chapter (chapter.id)}
+            <ListChapter {chapter} />
+          {/each}
+        {/if}
+
         <div class="chapter">
           <h3>01 - Course intro</h3>
           <div class="v-spacer" />
@@ -162,28 +183,6 @@
 <style lang="scss">
   @import '../styles/colors.scss';
 
-  .chapters-wrapper {
-    max-height: 300px;
-    overflow: auto;
-
-    @media (min-width: 1200px) {
-      max-height: unset;
-      flex: 1 0 auto;
-      position: relative;
-      overflow: auto;
-    }
-  }
-
-  .chapters-content {
-    @media (min-width: 1200px) {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-  }
-
   h1 {
     margin: 0;
     margin-top: 0.2rem;
@@ -198,18 +197,6 @@
     font-size: 1.5rem;
     font-weight: bold;
     padding-left: 1.5rem;
-    text-transform: capitalize;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: capitalize;
-  }
-
-  h4 {
-    margin-top: 0.7rem;
-    margin-bottom: 0.4rem;
     text-transform: capitalize;
   }
 
@@ -232,72 +219,38 @@
     //min-width: 60ch;
   }
 
-  #chapterslessons {
+  #playlist {
     flex: 1 1 30%;
     flex-direction: column;
-    background-color: $color6;
-    //min-width: 35ch;
+    background-color: $color1;
     display: flex;
   }
 
-  :global(.dark) #chapterslessons {
-    background-color: $color1;
+  .course-wrapper {
+    max-height: 300px;
+    overflow: auto;
+
+    @media (min-width: 1200px) {
+      max-height: unset;
+      flex: 1 0 auto;
+      position: relative;
+      overflow: auto;
+    }
+  }
+
+  .chapters-content {
+    @media (min-width: 1200px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
   }
 
   .scrollable {
     overflow-y: auto;
     // max-height: 550px;
-  }
-
-  .chapter {
-    display: flex;
-    align-items: center;
-    padding: 0.8rem;
-    border-bottom: 1px solid $color7;
-    background-color: $color2;
-  }
-  .chapter:hover {
-    background: linear-gradient(90deg, $color2, $color1);
-    cursor: pointer;
-  }
-
-  .lesson-detail {
-    display: flex;
-    align-items: center;
-    height: 1.5rem;
-
-    button {
-      cursor: pointer;
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      padding: 0.3rem;
-      color: $color3;
-      background-color: $color3;
-      border: 1px solid $color6;
-      color: $color5;
-      font-size: 0.9rem;
-    }
-  }
-
-  .lesson {
-    padding: 0.8rem;
-    padding-left: 2rem;
-    padding-top: 0.1rem;
-    border-bottom: 1px solid $color9;
-    background-color: $color3;
-  }
-
-  .lesson .duration {
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    margin-left: 0rem;
-    font-size: 0.9rem;
-  }
-
-  .lesson.active {
-    background: linear-gradient(90deg, $color10, $color8);
   }
 
   #html-content {
