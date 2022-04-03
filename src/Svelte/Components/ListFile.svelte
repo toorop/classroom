@@ -21,6 +21,16 @@
     }))
 
   }
+
+  // format lesson name
+  function formatLessonName(name: string): string {
+    // remove extension
+    name = name.split('.').slice(0,-1).join('.')
+    .replace(/_/g, ' ')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ').trim()
+    return name
+  }
 </script>
 
 {#if file.type === 'video/mp4'}
@@ -28,7 +38,7 @@
     class="lesson {$TrackingStore.currentLesson === file.id ? 'active' : ''}"
     on:click={() => updateCurrentLesson(file.id)}
   >
-    <h4>{file.name}</h4>
+    <h4>{formatLessonName(file.name)}</h4>
     <div class="lesson-detail">
       <div class="duration">
         <Icon icon="charm:clock" width="16" />
@@ -48,9 +58,7 @@
   }
 
   .lesson {
-    padding: 0.8rem;
-    padding-left: 2rem;
-    padding-top: 0.1rem;
+    padding: 0.1rem 0.8rem 0.8rem 2rem;
     border-bottom: 1px solid $color9;
     background-color: $color3;
     cursor: pointer;
@@ -67,7 +75,6 @@
       gap: 0.5rem;
       align-items: center;
       padding: 0.3rem;
-      color: $color3;
       background-color: $color3;
       border: 1px solid $color6;
       color: $color5;
@@ -79,7 +86,7 @@
     display: flex;
     align-items: center;
     gap: 0.2rem;
-    margin-left: 0rem;
+    margin-left: 0;
     font-size: 0.9rem;
   }
 
