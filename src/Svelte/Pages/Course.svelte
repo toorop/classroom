@@ -3,7 +3,7 @@
   import { location } from 'svelte-spa-router'
   import Icon from '@iconify/svelte'
   import { TrackingStore } from '../Stores/tracking'
-  import type { ITracking } from '../Stores/tracking'
+  // import type { ITracking } from '../Stores/tracking'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
   import type { ICourse, IVault } from '../global.d'
   import ListChapter from '../Components/ListChapter.svelte'
@@ -23,25 +23,33 @@
     chapters: []
   }
 
+  // reset tracking
+  TrackingStore.update(() => ({
+    currentCourse: '',
+    currentChapter: '',
+    currentLesson: ''
+  }))
+
   $: onMount(async () => {
     const vault = new Vault()
 
     // get course
     course = await vault.loadCourse(params.name, params.id)
+    console.log('COURSE:')
     console.log(course)
 
-    let tracking: ITracking
-    // init  tracking
-    TrackingStore.subscribe((t) => {
-      tracking = t
-    })
+    // // todo useless
+    // let tracking: ITracking
+    // // init  tracking
+    // TrackingStore.subscribe((t) => {
+    //   tracking = t
+    // })
 
-    // update store
+    // update  tracking store
     TrackingStore.update((state) => ({
-      ...state,
       currentCourse: course.id,
-      currentChapter: course.chapters[0].id,
-      currentLesson: course.chapters[0].files[0].id
+      currentChapter: course.chapters[0]?.id || '',
+      currentLesson: course.chapters[0]?.files[0].id || course.files[0].id
     }))
   })
 

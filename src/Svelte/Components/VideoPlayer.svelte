@@ -1,17 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { Vault } from '../Classes/Vault'
-  import VaultStore from '../Stores/vault'
   import type { IVault } from '../global.d'
   import { TrackingStore } from '../Stores/tracking'
-  import type { ITracking } from '../Stores/tracking'
 
   let videoPath: string
   let videoSource: string = ''
 
   let vaultContent: IVault
   const vault = new Vault()
-  //console.log('VAULT', vault)
 
   const getVideoURL = async (path: string) => {
     const fileContent = await window.API.fsRead(path)
@@ -22,6 +19,8 @@
 
   TrackingStore.subscribe(async (t) => {
     console.log('TRACKER:', t)
+    if (t.currentLesson === '') return
+    console.log('onCHERCHE')
     videoPath = vault.getVideoPath(
       t.currentCourse,
       t.currentChapter,
@@ -37,6 +36,7 @@
   //'/media/toorop/Bertha/Formation/Dev/Udemy - HTML&CSS Tutorial and Projects Course 2022 (Flexbox&Grid)/01 - Course Intro/001 Course Structure.mp4'
 
   onMount(async () => {
+    console.log('onMount videoPlayer')
     const video = document.getElementById('player') as HTMLVideoElement
     video.addEventListener('timeupdate', (evt: ProgressEvent) => {
       console.log(evt)

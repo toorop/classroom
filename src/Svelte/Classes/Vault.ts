@@ -139,10 +139,18 @@ export class Vault {
     chapterId: string,
     fileId: string
   ): IFile {
-    console.log('searching file:' + fileId)
-    const chapter = this.getChapterById(courseId, chapterId)
-    if (!chapter) return undefined
-    return chapter.files.find((file) => file.id === fileId)
+    if (courseId.length === 0 || fileId.length === 0) {
+      return undefined
+    }
+    if (chapterId.length === 0) {
+      const course = this.getCourseById(courseId)
+      if (!course) return undefined
+      return course.files.find((file) => file.id === fileId)
+    } else {
+      const chapter = this.getChapterById(courseId, chapterId)
+      if (!chapter) return undefined
+      return chapter.files.find((file) => file.id === fileId)
+    }
   }
 
   // return  files
@@ -179,11 +187,7 @@ export class Vault {
       'file:',
       fileId
     )
-    if (
-      courseId.length === 0 ||
-      chapterId.length === 0 ||
-      fileId.length === 0
-    ) {
+    if (courseId.length === 0 || fileId.length === 0) {
       return ''
     }
 
