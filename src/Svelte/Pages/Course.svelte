@@ -7,6 +7,7 @@
   import VideoPlayer from '../Components/VideoPlayer.svelte'
   import type { ICourse, IVault } from '../global.d'
   import ListChapter from '../Components/ListChapter.svelte'
+  import ListFile from '../Components/ListFile.svelte'
   import { Vault } from '../Classes/Vault'
 
   export let params: {
@@ -37,13 +38,6 @@
     course = await vault.loadCourse(params.name, params.id)
     console.log('COURSE:')
     console.log(course)
-
-    // // todo useless
-    // let tracking: ITracking
-    // // init  tracking
-    // TrackingStore.subscribe((t) => {
-    //   tracking = t
-    // })
 
     // update  tracking store
     TrackingStore.update((state) => ({
@@ -76,76 +70,11 @@
           {#each course.chapters as chapter (chapter.id)}
             <ListChapter {chapter} />
           {/each}
+        {:else if course.files !== undefined}
+          {#each course.files as file (file.id)}
+            <ListFile {file} />
+          {/each}
         {/if}
-
-        <div class="chapter">
-          <h3>01 - Course intro</h3>
-          <div class="v-spacer" />
-          <Icon icon="charm:chevrons-down" width="24" />
-        </div>
-        <div class="lesson active">
-          <h4>001 Course Structure</h4>
-          <div class="lesson-detail">
-            <div class="duration">
-              <Icon icon="charm:clock" width="16" />
-              4:15
-            </div>
-          </div>
-        </div>
-        <div class="lesson">
-          <h4>002 Video blur fix</h4>
-          <div class="lesson-detail">
-            <div class="duration">
-              <Icon icon="charm:clock" width="16" />
-              12:51
-            </div>
-            <div class="v-spacer" />
-            <button>
-              <Icon icon="ant-design:folder-filled" width="16" />
-              <span> Ressources</span>
-              <Icon icon="charm:chevron-down" width="16" />
-            </button>
-          </div>
-        </div>
-        <div class="lesson">
-          <h4>003 Course Review</h4>
-          <div class="lesson-detail">
-            <div class="duration">
-              <Icon icon="charm:clock" width="16" />
-              8:12
-            </div>
-          </div>
-        </div>
-        <div class="chapter">
-          <h3>02 - HTML tutorial</h3>
-          <div class="v-spacer" />
-          <Icon icon="charm:chevrons-right" width="24" />
-        </div>
-        <div class="chapter">
-          <h3>03 - HTML Coffee Project</h3>
-          <div class="v-spacer" />
-          <Icon icon="charm:chevrons-right" width="24" />
-        </div>
-        <div class="chapter">
-          <h3>04 - HTML tutorial</h3>
-          <div class="v-spacer" />
-          <Icon icon="charm:chevrons-right" width="24" />
-        </div>
-        <div class="chapter">
-          <h3>05 - HTML Coffee Project</h3>
-          <div class="v-spacer" />
-          <Icon icon="charm:chevrons-right" width="24" />
-        </div>
-        <div class="chapter">
-          <h3>06 - HTML tutorial</h3>
-          <div class="v-spacer" />
-          <Icon icon="bi:chevron-double-right" width="24" />
-        </div>
-        <div class="chapter">
-          <h3>07 - HTML Coffee Project</h3>
-          <div class="v-spacer" />
-          <Icon icon="bi:chevron-double-right" width="24" />
-        </div>
       </div>
     </div>
   </div>
@@ -219,10 +148,6 @@
     font-weight: bold;
     padding-left: 1.5rem;
     text-transform: capitalize;
-  }
-
-  .v-spacer {
-    flex-grow: 1;
   }
 
   #video-and-summary {

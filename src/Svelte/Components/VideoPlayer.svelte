@@ -36,7 +36,6 @@
   //'/media/toorop/Bertha/Formation/Dev/Udemy - HTML&CSS Tutorial and Projects Course 2022 (Flexbox&Grid)/01 - Course Intro/001 Course Structure.mp4'
 
   onMount(async () => {
-    console.log('onMount videoPlayer')
     const video = document.getElementById('player') as HTMLVideoElement
     video.addEventListener('timeupdate', (evt: ProgressEvent) => {
       console.log(evt)
