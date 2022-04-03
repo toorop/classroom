@@ -37,7 +37,7 @@ export class Vault {
 
   // return course
   public async loadCourse(courseName: string, id: string): Promise<ICourse> {
-    // already loaded ? => in strore
+    // already loaded ? => in store
     let course = this.getCourseById(id)
     if (course && course.chapters) {
       return course
@@ -117,14 +117,12 @@ export class Vault {
 
   // get course by id from memory
   public getCourseById(courseId: string): ICourse {
-    console.log(this.content.courses)
     return this.content.courses.find((course) => course.id === courseId)
   }
 
   // get chapter by id from memory
   public getChapterById(courseId: string, chapterId: string): IChapter {
     const course = this.getCourseById(courseId)
-    console.log(course)
     if (!course) return undefined
     return course.chapters.find((chapter) => chapter.id === chapterId)
   }
@@ -175,14 +173,6 @@ export class Vault {
     chapterId: string,
     fileId: string
   ): string {
-    console.log(
-      'searching course:',
-      courseId,
-      'chapter:',
-      chapterId,
-      'file:',
-      fileId
-    )
     if (courseId.length === 0 || fileId.length === 0) {
       return ''
     }

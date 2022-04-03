@@ -37,7 +37,7 @@ function createWindow() {
     width: 800,
     height: 600,
     title: 'ClassRoom',
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),

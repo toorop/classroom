@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
   import { TrackingStore } from '../Stores/tracking'
-  import type { IFile } from '../global.d'
+  import type { IFile } from '../global'
 
   export let file: IFile
 
@@ -15,7 +15,11 @@
 
   // update lesson
   const updateCurrentLesson = (id: string) => {
-    $TrackingStore.currentLesson = id
+    TrackingStore.update((state)=> ({
+      ...state,
+      currentLesson: id
+    }))
+
   }
 </script>
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import {onDestroy} from "svelte";
   import Icon from '@iconify/svelte'
   import { TrackingStore } from '../Stores/tracking'
   import ListFile from './ListFile.svelte'
@@ -6,26 +7,32 @@
 
   import type { IChapter, ICourse } from '../global.d'
 
-  let tracking: ITracking
-  TrackingStore.subscribe((t) => {
-    tracking = t
-  })
-
   export let chapter: IChapter = {
     id: '',
     name: '',
     path: ''
   }
 
+
+  let tracking: ITracking
+  const unsubscribe = TrackingStore.subscribe((t) => {
+    tracking = t
+  })
+
   // change chapter
   const updateCurrentChapter = (id: string) => {
     $TrackingStore.currentChapter = id
   }
+
+  // unsub
+  onDestroy(() => {
+    unsubscribe()
+  })
 </script>
 
 <div class="chapter" on:click={() => updateCurrentChapter(chapter.id)}>
   <h3>{chapter.name}</h3>
-  <div class="v-spacer" />
+  <div class="v-spacer"></div>
   <Icon
     icon={tracking.currentChapter === chapter.id
       ? 'charm:chevrons-down'

@@ -1,11 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { location } from 'svelte-spa-router'
-  import Icon from '@iconify/svelte'
   import { TrackingStore } from '../Stores/tracking'
-  // import type { ITracking } from '../Stores/tracking'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
-  import type { ICourse, IVault } from '../global.d'
+  import type { ICourse } from '../global'
   import ListChapter from '../Components/ListChapter.svelte'
   import ListFile from '../Components/ListFile.svelte'
   import { Vault } from '../Classes/Vault'
@@ -31,13 +28,11 @@
     currentLesson: ''
   }))
 
-  $: onMount(async () => {
+  onMount(async () => {
     const vault = new Vault()
 
     // get course
     course = await vault.loadCourse(params.name, params.id)
-    console.log('COURSE:')
-    console.log(course)
 
     // update  tracking store
     TrackingStore.update((state) => ({

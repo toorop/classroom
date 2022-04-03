@@ -15,7 +15,7 @@
         on:click={() => push(`/course/${course.name}/${course.id}`)}
       >
         <p>{course.name}</p>
-        <div class="spacer" />
+        <div class="spacer"></div>
         <Icon id="iconPlay" icon="carbon:play-filled-alt" width="32" />
       </div>
     {/each}
@@ -48,8 +48,7 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    padding: 3rem;
-    padding-top: 1rem;
+    padding: 1rem 3rem 3rem;
   }
 
   .course {
@@ -57,10 +56,7 @@
     flex: 1 1 100%;
     flex-direction: row;
     align-items: center;
-    padding: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-right: 2rem;
+    padding: 0.5rem 2rem 0.5rem 1rem;
     color: $color4;
     background-color: $color3;
     border-radius: 4px;
