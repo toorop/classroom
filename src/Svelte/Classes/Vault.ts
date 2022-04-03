@@ -1,7 +1,7 @@
 import VaultStore from '../Stores/vault'
-import { getPathSeparator } from '../Libs/utils'
-import type { IVault, IChapter, ICourse, IFile } from '../global.d'
-import type { IFsStatsResult } from '../../types/shared'
+import {getPathSeparator} from '../Libs/utils'
+import type {IChapter, ICourse, IFile, IVault} from '../global'
+import type {IFsStatsResult} from '../../types/shared'
 
 export class Vault {
   content?: IVault
@@ -118,8 +118,7 @@ export class Vault {
   // get course by id from memory
   public getCourseById(courseId: string): ICourse {
     console.log(this.content.courses)
-    const course = this.content.courses.find((course) => course.id === courseId)
-    return course
+    return this.content.courses.find((course) => course.id === courseId)
   }
 
   // get chapter by id from memory

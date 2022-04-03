@@ -20,10 +20,11 @@
     }
   })
 
-  const setVaulPath = (evt: CustomEvent) => {
+  // set vault path
+  const setVaultPath = (evt: CustomEvent) => {
     const vaultPath = evt.detail
     window.localStorage.setItem('vaultPath', vaultPath)
-    // set base path for next time
+    // set base path in local storageS
     const basePath = vaultPath.split('/').slice(0, -1).join('/')
     window.localStorage.setItem('vaultBasePath', basePath)
     initVault(vaultPath)
@@ -38,24 +39,10 @@
     const courses = await vault.loadCourses()
     console.log(courses)
     // update state
-    push('/courses')
-
-    // get vault infos
-    //const content = await vault.load()
-    //push('/room')
-
-    // check vault path
-    // must be empty or have a good structure
-
-    // load vault
-
-    // store vault path in local storage
-
-    //window.localStorage.setItem('vaultPath', vaultPath)
-    //showVaultPathSelector = false
+    await push('/courses')
   }
 </script>
 
 {#if showVaultPathSelector}
-  <VaultPathSelector on:vault-path-selected={setVaulPath} />
+  <VaultPathSelector on:vault-path-selected={setVaultPath} />
 {/if}
