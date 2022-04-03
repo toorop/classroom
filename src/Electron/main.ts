@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
 import * as serve from 'electron-serve'
 import { getVault } from './ipc/vault'
@@ -13,6 +13,7 @@ import {
 } from './ipc/fs'
 import { showOpenDialog } from './ipc/ui'
 
+// @ts-ignore
 const loadURL = serve({ directory: 'public/build' })
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -31,7 +32,7 @@ if (isDev()) {
   // })
 }
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -51,9 +52,9 @@ function createWindow() {
   // This block of code is intended for development purpose only.
   // Delete this entire block of code when you are ready to package the application.
   if (isDev()) {
-    mainWindow.loadURL('http://localhost:8080/')
+    await mainWindow.loadURL('http://localhost:8080/')
   } else {
-    loadURL(mainWindow)
+    await loadURL(mainWindow)
   }
 
   // Uncomment the following line of code when app is ready to be packaged.
@@ -81,11 +82,11 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
   // define IPC events & handlers
   defineIpc()
   // create main window
-  createWindow()
+  await createWindow()
   // Show devtools if not packaged
   if (isDev()) {
     mainWindow.webContents.openDevTools()
@@ -96,15 +97,15 @@ app.on('ready', () => {
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  // On macOS it is common for applications and their menu bar
+  // On macOS, it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
 })
 
-app.on('activate', function () {
-  // On macOS it's common to re-create a window in the app when the
+app.on('activate', async function () {
+  // On macOS, it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow()
+  if (mainWindow === null) await createWindow()
 })
 
 // IPC
