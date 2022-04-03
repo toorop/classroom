@@ -35,10 +35,11 @@ if (isDev()) {
 async function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     title: 'ClassRoom',
-    autoHideMenuBar: false,
+    autoHideMenuBar: true,
+    frame: true,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
