@@ -3,7 +3,7 @@
   import { onMount } from 'svelte'
   import { push } from 'svelte-spa-router'
   import { Vault } from '../Classes/Vault'
-  import VaultStore from '../Stores/vault'
+  import TrackingStore from '../Stores/tracking'
   import VaultPathSelector from '../Components/VaultPathSelector.svelte'
 
   let showVaultPathSelector = false
@@ -36,6 +36,15 @@
     vault.setPath(vaultPath)
     // load courses
     await vault.loadCourses()
+
+    // load tracker from local storage
+    vault.loadTrackerFromLocalStorage()
+
+    // keep local storage up to date
+    TrackingStore.subscribe(async () => {
+      vault.syncTracker2LocalStorage()
+    })
+
     // update state
     await push('/courses')
   }

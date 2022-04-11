@@ -1,7 +1,11 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
+  import { get } from 'svelte/store'
   import { push } from 'svelte-spa-router'
   import VaultStore from '../Stores/vault'
+  import TrackingStore from '../Stores/tracking'
+
+  const currentCourse = get(TrackingStore).currentCourse
 </script>
 
 <div class="title">
@@ -11,11 +15,11 @@
   <div id="courses">
     {#each $VaultStore.courses as course}
       <div
-        class="course"
+        class="course {course.id === currentCourse ? 'current' : ''}"
         on:click={() => push(`/course/${course.name}/${course.id}`)}
       >
         <p>{course.name}</p>
-        <div class="spacer"></div>
+        <div class="spacer" />
         <Icon id="iconPlay" icon="carbon:play-filled-alt" width="32" />
       </div>
     {/each}
@@ -68,6 +72,15 @@
     & > p {
       font-size: 1.2rem;
       margin-left: 1rem;
+    }
+  }
+
+  .course.current {
+    background-color: $color5;
+    color: $color1;
+    &:hover {
+      background-color: $color3;
+      color: $color4;
     }
   }
 </style>

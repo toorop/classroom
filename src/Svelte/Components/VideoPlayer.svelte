@@ -15,7 +15,7 @@
   // Vault
   const vault = new Vault()
 
-  // get video URL as createObjectURL
+  // get video URL as ObjectURL
   const getVideoURL = async (path: string) => {
     const fileContent = await window.API.fsRead(path)
     const videoFile = new File([fileContent as BlobPart], 'video/mp4')
@@ -48,7 +48,6 @@
       video.addEventListener(
         'canplay',
         async () => {
-          console.log('can play')
           await video.play()
         },
         { once: true }

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { get } from 'svelte/store'
   import TrackingStore from '../Stores/tracking'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
   import type { ICourse } from '../global'
@@ -24,22 +25,25 @@
   }
 
   // reset tracking
-  TrackingStore.update(() => ({
-    currentCourse: '',
-    currentChapter: '',
-    currentLesson: ''
-  }))
+  // TrackingStore.update(() => ({
+  //   currentCourse: '',
+  //   currentChapter: '',
+  //   currentLesson: ''
+  // }))
 
   onMount(async () => {
     // get course
+
     course = await vault.loadCourse(params.name, params.id)
 
     // update  tracking store
-    TrackingStore.update((state) => ({
-      currentCourse: course.id,
-      currentChapter: course.chapters[0]?.id || '',
-      currentLesson: course.chapters[0]?.files[0].id || course.files[0].id
-    }))
+    if (course.id !== get(TrackingStore).currentCourse) {
+      TrackingStore.update((state) => ({
+        currentCourse: course.id,
+        currentChapter: course.chapters[0]?.id || '',
+        currentLesson: course.chapters[0]?.files[0].id || course.files[0].id
+      }))
+    }
   })
 
   async function playNextLesson() {

@@ -252,4 +252,43 @@ export class Vault {
       }))
     }
   }
+
+  // keep tracker synced with local storage
+  public syncTracker2LocalStorage(): void {
+    const { currentCourse, currentChapter, currentLesson } = get(TrackingStore)
+    if (currentCourse !== '') {
+      window.localStorage.setItem('currentCourse', currentCourse)
+    }
+    if (currentChapter !== '') {
+      window.localStorage.setItem('currentChapter', currentChapter)
+    }
+    if (currentLesson !== '') {
+      window.localStorage.setItem('currentLesson', currentLesson)
+    }
+  }
+
+  // load tracker from local storage
+  public loadTrackerFromLocalStorage(): void {
+    const currentCourse = window.localStorage.getItem('currentCourse')
+    const currentChapter = window.localStorage.getItem('currentChapter')
+    const currentLesson = window.localStorage.getItem('currentLesson')
+    if (currentCourse !== null) {
+      TrackingStore.update((state) => ({
+        ...state,
+        currentCourse
+      }))
+    }
+    if (currentChapter !== null) {
+      TrackingStore.update((state) => ({
+        ...state,
+        currentChapter
+      }))
+    }
+    if (currentLesson !== null) {
+      TrackingStore.update((state) => ({
+        ...state,
+        currentLesson
+      }))
+    }
+  }
 }
