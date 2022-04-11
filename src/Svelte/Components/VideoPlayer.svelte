@@ -7,7 +7,7 @@
   let videoSource: string = ''
 
   // to avoid duplicate search
-  let currentLesson: string = ''
+  //let currentLesson: string = ''
 
   // dispatcher
   const dispatch = createEventDispatcher()
@@ -25,9 +25,7 @@
   // store
   const unsubscribe = TrackingStore.subscribe(async (t) => {
     if (t.currentLesson === '') return
-    if (t.currentLesson === currentLesson) return
-    currentLesson = t.currentLesson
-    videoPath = vault.getVideoPath(
+    videoPath = await vault.getVideoPath(
       t.currentCourse,
       t.currentChapter,
       t.currentLesson

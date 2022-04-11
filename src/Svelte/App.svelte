@@ -3,6 +3,8 @@
   import Router from 'svelte-spa-router'
   import routes from './routes'
   import Navbar from './Components/Navbar.svelte'
+
+  console.log('launching app')
 </script>
 
 <div id="app">

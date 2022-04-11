@@ -1,9 +1,26 @@
 <script lang="ts">
+  import { onMount, onDestroy } from 'svelte'
   import Icon from '@iconify/svelte'
   import TrackingStore from '../Stores/tracking'
   import type { IFile } from '../global'
+  import type { ITracking } from '../Stores/tracking'
+
+  let tracking: ITracking
+  const unsubscribe = TrackingStore.subscribe((t) => {
+    tracking = t
+  })
 
   export let file: IFile
+
+  onMount(() => {
+    if (tracking.currentLesson === file.id) {
+      const lesson = document.getElementById(`lesson-${tracking.currentLesson}`)
+
+      const offset = lesson?.offsetTop || 0
+      const wrapper = document.getElementsByClassName('course-wrapper')[0]
+      wrapper.scrollTop = offset - 78
+    }
+  })
 
   // format time
   function formatTime(time: number): string {
@@ -34,10 +51,16 @@
       .trim()
     return name
   }
+
+  // unsub
+  onDestroy(() => {
+    unsubscribe()
+  })
 </script>
 
 {#if file.type === 'video/mp4'}
   <div
+    id={`lesson-${file.id}`}
     class="lesson {$TrackingStore.currentLesson === file.id ? 'active' : ''}"
     on:click={() => updateCurrentLesson(file.id)}
   >

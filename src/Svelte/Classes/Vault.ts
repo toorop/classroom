@@ -44,13 +44,13 @@ export class Vault {
     if (course && course.chapters) {
       return course
     }
+
     course = {
       id,
       name: courseName,
       chapters: [],
       files: []
     }
-    //console.log(courseName)
     const pathSeparator = getPathSeparator()
     // get chapters or (video and files) if no chapters
     const firstFloor = await window.API.fsReadDir(this.content.path, courseName)
@@ -119,22 +119,30 @@ export class Vault {
 
   // get course by id from memory
   public getCourseById(courseId: string): ICourse {
+    //return get(VaultStore).courses.find((course) => course.id === courseId)
     return this.content.courses.find((course) => course.id === courseId)
   }
 
   // get chapter by id from memory
-  public getChapterById(courseId: string, chapterId: string): IChapter {
-    const course = this.getCourseById(courseId)
+  public async getChapterById(
+    courseId: string,
+    chapterId: string
+  ): Promise<IChapter> {
+    let course = this.getCourseById(courseId)
     if (!course) return undefined
+    // if not chapters load them
+    if (!course.chapters) {
+      course = await this.loadCourse(course.name, course.id)
+    }
     return course.chapters.find((chapter) => chapter.id === chapterId)
   }
 
   // get file by id from memory
-  public getFileById(
+  public async getFileById(
     courseId: string,
     chapterId: string,
     fileId: string
-  ): IFile {
+  ): Promise<IFile> {
     if (courseId.length === 0 || fileId.length === 0) {
       return undefined
     }
@@ -143,7 +151,7 @@ export class Vault {
       if (!course) return undefined
       return course.files.find((file) => file.id === fileId)
     } else {
-      const chapter = this.getChapterById(courseId, chapterId)
+      const chapter = await this.getChapterById(courseId, chapterId)
       if (!chapter) return undefined
       return chapter.files.find((file) => file.id === fileId)
     }
@@ -170,15 +178,15 @@ export class Vault {
 
   // return path of a video file
   // todo handle file not found
-  public getVideoPath(
+  public async getVideoPath(
     courseId: string,
     chapterId: string,
     fileId: string
-  ): string {
+  ): Promise<string> {
     if (courseId.length === 0 || fileId.length === 0) {
       return ''
     }
-    const file = this.getFileById(courseId, chapterId, fileId)
+    const file = await this.getFileById(courseId, chapterId, fileId)
     return file.path
   }
 

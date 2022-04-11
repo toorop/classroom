@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte'
+  import { onDestroy, onMount } from 'svelte'
   import Icon from '@iconify/svelte'
   import TrackingStore from '../Stores/tracking'
   import ListFile from './ListFile.svelte'
@@ -29,7 +29,11 @@
   })
 </script>
 
-<div class="chapter" on:click={() => updateCurrentChapter(chapter.id)}>
+<div
+  id={`chapter-${chapter.id}`}
+  class="chapter"
+  on:click={() => updateCurrentChapter(chapter.id)}
+>
   <h3>{chapter.name}</h3>
   <div class="v-spacer" />
   <Icon
