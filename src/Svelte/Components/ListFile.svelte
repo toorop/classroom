@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
-  import { TrackingStore } from '../Stores/tracking'
+  import TrackingStore from '../Stores/tracking'
   import type { IFile } from '../global'
 
   export let file: IFile
@@ -15,20 +15,23 @@
 
   // update lesson
   const updateCurrentLesson = (id: string) => {
-    TrackingStore.update((state)=> ({
+    TrackingStore.update((state) => ({
       ...state,
       currentLesson: id
     }))
-
   }
 
   // format lesson name
   function formatLessonName(name: string): string {
     // remove extension
-    name = name.split('.').slice(0,-1).join('.')
-    .replace(/_/g, ' ')
-    .replace(/-/g, ' ')
-    .replace(/\s+/g, ' ').trim()
+    name = name
+      .split('.')
+      .slice(0, -1)
+      .join('.')
+      .replace(/_/g, ' ')
+      .replace(/-/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
     return name
   }
 </script>

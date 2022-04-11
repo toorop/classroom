@@ -6,8 +6,10 @@ export interface ITracking {
   currentLesson: string
 }
 
-export const TrackingStore = writable<ITracking>({
+const TrackingStore = writable<ITracking>({
   currentCourse: '',
   currentChapter: '',
   currentLesson: ''
 })
+
+export default TrackingStore

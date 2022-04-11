@@ -1,7 +1,9 @@
+import { get } from 'svelte/store'
 import VaultStore from '../Stores/vault'
-import {getPathSeparator} from '../Libs/utils'
-import type {IChapter, ICourse, IFile, IVault} from '../global'
-import type {IFsStatsResult} from '../../types/shared'
+import TrackingStore from '../Stores/tracking'
+import { getPathSeparator } from '../Libs/utils'
+import type { IChapter, ICourse, IFile, IVault } from '../global'
+import type { IFsStatsResult } from '../../types/shared'
 
 export class Vault {
   content?: IVault
@@ -178,5 +180,76 @@ export class Vault {
     }
     const file = this.getFileById(courseId, chapterId, fileId)
     return file.path
+  }
+
+  // update vault (and store) to next lesson
+  public async nextLesson(): Promise<void> {
+    const { currentCourse, currentChapter, currentLesson } = get(TrackingStore)
+
+    // for chapters.filter
+    const chapterIndexFinder = (chapter: IChapter) =>
+      chapter.id === currentChapter
+    // for lessons.filter
+    const fileIndexFinder = (file: IFile) => file.id === currentLesson
+
+    // get course
+    const course = this.getCourseById(currentCourse)
+    let nextFileId = currentLesson
+    let nextChapterId = currentChapter
+
+    // get current chapter index
+    let currentChapterIndex = -1 // no chapters by default
+    if (currentChapter !== '') {
+      currentChapterIndex = course.chapters.findIndex(chapterIndexFinder)
+    }
+
+    // files of current chapter
+    let files: IFile[] = []
+    if (currentChapterIndex === -1) {
+      files = course.files
+    } else {
+      files = course.chapters[currentChapterIndex].files
+    }
+    const currentLessonIndex = files.findIndex(fileIndexFinder)
+
+    // next file exist and is a video ?
+    let lessonIndex = currentLessonIndex
+    while (true) {
+      lessonIndex++
+      if (lessonIndex < files.length) {
+        const nextFile = files[lessonIndex]
+        if (nextFile.type === 'video/mp4') {
+          nextFileId = nextFile.id
+          break
+        }
+      } else {
+        // no more files, next chapter
+        // no chapter or no more chapters ?
+        if (
+          currentChapterIndex === -1 ||
+          currentChapterIndex >= course.chapters.length - 1
+        ) {
+          break
+        }
+        // next chapter
+        currentChapterIndex++
+
+        files = course.chapters[currentChapterIndex].files
+        lessonIndex = -1
+      }
+    }
+    // if new lesson is found update store
+    if (nextFileId !== currentLesson) {
+      nextChapterId =
+        currentChapterIndex === -1
+          ? ''
+          : course.chapters[currentChapterIndex].id
+
+      TrackingStore.update((state) => ({
+        ...state,
+        currentChapter: nextChapterId,
+        currentLesson: nextFileId
+      }))
+    }
   }
 }

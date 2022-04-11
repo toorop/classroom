@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { TrackingStore } from '../Stores/tracking'
+  import TrackingStore from '../Stores/tracking'
   import VideoPlayer from '../Components/VideoPlayer.svelte'
   import type { ICourse } from '../global'
   import ListChapter from '../Components/ListChapter.svelte'
@@ -11,6 +11,8 @@
     name: string
     id: string
   }
+
+  const vault = new Vault()
 
   let selectedChapter: string
   let selectedCourse: string
@@ -29,8 +31,6 @@
   }))
 
   onMount(async () => {
-    const vault = new Vault()
-
     // get course
     course = await vault.loadCourse(params.name, params.id)
 
@@ -41,6 +41,12 @@
       currentLesson: course.chapters[0]?.files[0].id || course.files[0].id
     }))
   })
+
+  async function playNextLesson() {
+    // get next video
+    await vault.nextLesson()
+    window.dispatchEvent(new Event('play'))
+  }
 
   // format time
   function formatTime(time: number): string {
@@ -54,7 +60,7 @@
 <h1>{params.name}</h1>
 <div id="video-and-summary">
   <div id="video-player">
-    <VideoPlayer />
+    <VideoPlayer on:videoEnded={playNextLesson} />
   </div>
   <!--playlist-->
   <div id="playlist">
@@ -74,8 +80,7 @@
     </div>
   </div>
 </div>
-<div id="html-content">
-</div>
+<div id="html-content" />
 
 <style lang="scss">
   @import '../styles/colors.scss';
