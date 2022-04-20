@@ -32,6 +32,18 @@ if (isDev()) {
   // })
 }
 
+// disable hardware acceleration on linux
+/*
+if (process.platform === 'linux') {
+    console.log('linux')
+    //app.disableHardwareAcceleration()
+    app.commandLine.appendSwitch('in-process-gpu')
+    app.commandLine.appendSwitch("disable-gpu");
+    app.commandLine.appendSwitch("disable-software-rasterizer")
+
+}
+*/
+
 async function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
