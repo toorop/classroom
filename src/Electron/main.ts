@@ -37,8 +37,10 @@ if (process.platform === 'linux') {
     console.log('linux')
     app.disableHardwareAcceleration()
     app.commandLine.appendSwitch('in-process-gpu')
-    app.commandLine.appendSwitch("disable-gpu");
-    app.commandLine.appendSwitch("disable-software-rasterizer")
+    app.commandLine.appendSwitch('disable-gpu')
+    app.commandLine.appendSwitch('disable-software-rasterizer')
+    app.commandLine.appendSwitch('disable-gpu-compositing')
+
 }
 
 
