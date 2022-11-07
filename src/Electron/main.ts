@@ -33,6 +33,7 @@ if (isDev()) {
 }
 
 // disable hardware acceleration on linux
+//console.log(process.platform)
 if (process.platform === 'linux') {
     console.log('linux')
     app.disableHardwareAcceleration()
@@ -40,7 +41,12 @@ if (process.platform === 'linux') {
     app.commandLine.appendSwitch('disable-gpu')
     app.commandLine.appendSwitch('disable-software-rasterizer')
     app.commandLine.appendSwitch('disable-gpu-compositing')
-
+} else  if (process.platform==='win32') {
+  console.log('windows')
+  //app.commandLine.appendSwitch('headless')
+  //app.commandLine.appendSwitch('disable-gpu-compositing')
+  app.commandLine.appendSwitch('disable-gpu')
+  app.commandLine.appendSwitch('disable-software-rasterizer')
 }
 
 

@@ -13,7 +13,7 @@
     "electron": "wait-on http://localhost:8080 && electron dist/main.js",
     "electron-dev": "npm run tsc && concurrently \"npm run dev\" \"npm run electron\"",
     "preelectron-pack": "npm run tsc && npm run build",
-    "electron-pack": "electron-builder -l"
+    "electron-pack": "electron-builder"
   },
   "devDependencies": {
     "@iconify/svelte": "^3.0.0",
@@ -24,9 +24,7 @@
     "concurrently": "^7.0.0",
     "electron": "^21.0.1",
     "electron-builder": "^23.6.0",
-    "node-sass": "^7.0.1",
     "postcss": "^8.4.12",
-    "sass": "^1.49.9",
     "snowpack": "^3.8.8",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.10.4",
@@ -53,7 +51,11 @@
       "dist/preload.js",
       "dist/ipc/*"
     ],
-    "win": {},
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
     "linux": {},
     "mac": {
       "target": [
